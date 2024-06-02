@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 const temaCustomizado = {
-  dark: true,
+  dark: false,
   colors: {
     background: '#660000',
     surface: '#FFFFFF',
