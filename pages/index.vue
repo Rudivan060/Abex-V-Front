@@ -8,19 +8,13 @@
           </v-icon>  
         </a>
         <a href="">
-          <v-tab :value="1" @click="" style="color: cadetblue; font-weight:
-              bolder; font-size:larger;" class="text-none">Início</v-tab>
+          <v-tab :value="1" @click="" style="color: cadetblue; font-weight: bolder; font-size:larger;" class="text-none">Início</v-tab>
         </a>     
-        <v-tab :value="2" @click="" style="color: cadetblue; font-weight: bolder; 
-            font-size:larger;" class="text-none">Cupons</v-tab>
-        <v-tab :value="3" @click="" style="color: cadetblue; font-weight: bolder; 
-            font-size:larger;" class="text-none" href="./cardapio">Cardápio</v-tab>
-        <v-tab :value="4" @click="" style="color: cadetblue; font-weight: bolder; 
-            font-size:larger;" class="text-none">App BK</v-tab>
-        <v-tab :value="5" @click="" style="color: cadetblue; font-weight: bolder; 
-            font-size:larger;" class="text-none">Clube BK</v-tab>
-        <v-tab :value="6" @click="" style="color: cadetblue; font-weight: bolder; 
-            font-size:larger;" class="text-none">Delivery</v-tab>
+        <v-tab :value="2" @click="" style="color: cadetblue; font-weight: bolder; font-size:larger;" class="text-none">Cupons</v-tab>
+        <v-tab :value="3" @click="" style="color: cadetblue; font-weight: bolder; font-size:larger;" class="text-none" href="./cardapio">Cardápio</v-tab>
+        <v-tab :value="4" @click="" style="color: cadetblue; font-weight: bolder; font-size:larger;" class="text-none">App BK</v-tab>
+        <v-tab :value="5" @click="" style="color: cadetblue; font-weight: bolder; font-size:larger;" class="text-none">Clube BK</v-tab>
+        <v-tab :value="6" @click="" style="color: cadetblue; font-weight: bolder; font-size:larger;" class="text-none">Delivery</v-tab>
       </v-tabs>
     </v-card>
   </template>

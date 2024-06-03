@@ -1,5 +1,4 @@
 <template>
-  <div style="background-color: bisque;">
     <v-card style="background-color: #f5ebdc;">
       <v-tabs v-model="tab" align-tabs="center" color="deep-purple-accent-4">
         <v-tab :value="1" @click="" style="color: cadetblue; font-weight: bolder; font-size:larger;" href="http://localhost:3000/" class="text-none">Início</v-tab>
@@ -46,7 +45,6 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
 </template>
 
 <script>
