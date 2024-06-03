@@ -2,7 +2,7 @@
   <template style="background-color: bisque;">
     <v-card style="background-color: #f5ebdc;">
       <v-tabs v-model="tab" align-tabs="center" color="deep-purple-accent-4">
-        <a href="./ademiro">
+        <a href="http://localhost:3000/ademiro">
           <v-icon style="color: blue;">
             mdi-call-split
           </v-icon>  
@@ -27,8 +27,8 @@
       <div class="box">
         <div class="conteudo">
           <pre>
-            O amor pode Acabar 
-            Mas o amor pela comida boa é eterno!
+            O AMOR PODE ACABAR
+            O BOM GOSTO NÃO!
           </pre>
           <img src="/imagem/burgasso.png" alt="" style="height: 65%; width: 65%;">
         </div>

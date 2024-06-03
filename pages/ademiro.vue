@@ -7,10 +7,10 @@
              bolder; font-size:larger;" href="http://localhost:3000/" class="text-none">Início</v-tab>
 
         <v-tab :value="2" @click="" style="color: cadetblue; font-weight: bold; 
-            font-size:large;" class="text-none">Cupons</v-tab>
+            font-size:large;" class="text-none" >Cupons</v-tab>
 
         <v-tab :value="3" @click="" style="color: cadetblue; font-weight: bold; 
-            font-size:large;" class="text-none">Cardápio</v-tab>
+            font-size:large;" class="text-none" href="http://localhost:3000/cardapio">Cardápio</v-tab>
 
         <v-tab :value="4" @click="" style="color: cadetblue; font-weight: bold; 
             font-size:large;" class="text-none">App BK</v-tab>
@@ -110,7 +110,7 @@
 
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-home" to="/" title="Início" value="starred"></v-list-item>
-          <v-list-item to="variaveis" prepend-icon="mdi-food" title="Cardápio" value="myfiles"></v-list-item>
+          <v-list-item href="http://localhost:3000/cardapio" prepend-icon="mdi-food" title="Cardápio" value="myfiles"></v-list-item>
           <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
           <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
         </v-list>
@@ -185,9 +185,9 @@
     methods: {
       async persist() {
         if (this.product.id) {
-          const response = await this.$api.patch(`/product/${this.product.id}`, this.product);
+          const response = await this.$api.patch(`/product/persist/${this.product.id}`, this.product);
         } else {
-          const response = await this.$api.post("/product", this.product);
+          const response = await this.$api.post("/product/persist", this.product);
         }
         this.resetProduct();
         await this.getItems();
@@ -226,11 +226,12 @@
 
       async deleteItem(item) {
         if (confirm(`Deseja deletar?`)) {
-          const response = await this.$api.delete(`/product/destroy/${item.id}`);
+          const response = await this.$api.delete(`/product/delete/${item.id}`);
         }
         if (response.type == "error") {
           alert(response.message);
         }
+        this.resetProduct();
       },
 
     },
