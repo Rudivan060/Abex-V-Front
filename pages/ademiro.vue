@@ -1,31 +1,44 @@
 <template>
-  
-  <template style="background-color: bisque;">
-    <v-card style="background-color: #f5ebdc;">
+  <template>
+    <v-card style="background-color: orangered;">
       <v-tabs v-model="tab" align-tabs="center" color="deep-purple-accent-4">
-        <v-tab :value="1" @click="" style="color: cadetblue;font-weight:
-             bolder; font-size:larger;" href="http://localhost:3000/" class="text-none">Início</v-tab>
 
-        <v-tab :value="2" @click="" style="color: cadetblue; font-weight: bold; 
-            font-size:large;" class="text-none" >Cupons</v-tab>
+        <a href="http://localhost:3000/">
+          <v-tab :value="1" @click="" style="color: cadetblue; font-weight: bolder; 
+          font-size:larger;" class="text-none">Início</v-tab>
+        </a>
 
-        <v-tab :value="3" @click="" style="color: cadetblue; font-weight: bold; 
-            font-size:large;" class="text-none" href="http://localhost:3000/cardapio">Cardápio</v-tab>
+        <a href="">
+          <v-tab :value="2" @click="" style="color: cadetblue; font-weight: bold; 
+          font-size:large;" class="text-none">Cupons</v-tab>
+        </a>
 
-        <v-tab :value="4" @click="" style="color: cadetblue; font-weight: bold; 
-            font-size:large;" class="text-none">App BK</v-tab>
+        <a href="http://localhost:3000/cardapio">
+          <v-tab :value="3" @click="" style="color: cadetblue; font-weight: bold;
+          font-size:large;" class="text-none">Cardápio</v-tab>
+        </a>
 
-        <v-tab :value="5" @click="" style="color: cadetblue; font-weight: bold; 
-            font-size:large;" class="text-none">Clube BK</v-tab>
+        <a href="">
+          <v-tab :value="4" @click="" style="color: cadetblue; font-weight: bold;
+          font-size:large;" class="text-none">AppBK</v-tab>
+        </a>
 
-        <v-tab :value="6" @click="" style="color: cadetblue; font-weight: bold; 
-            font-size:large;" class="text-none">Delivery</v-tab>
+        <a href="">
+          <v-tab :value="5" @click="" style="color: cadetblue; font-weight: bold;
+          font-size:large;" class="text-none">ClubeBK</v-tab>
+        </a>
+
+        <a href="">
+          <v-tab :value="6" @click="" style="color: cadetblue; font-weight: bold; 
+          font-size:large;" class="text-none">Delivery</v-tab>
+        </a>
+
       </v-tabs>
-    </v-card>
+    </v-card>  
   </template>
 
   <v-app>
-    <v-container style="border-radius: 6%;">
+    <v-container>
       <TabelaComponent titulo="Tabelasso" 
         :items="items" 
         :headers="headers" 

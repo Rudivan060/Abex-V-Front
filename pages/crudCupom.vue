@@ -1,28 +1,41 @@
 <template>
-  
-    <template style="background-color: bisque;">
-      <v-card style="background-color: #f5ebdc;">
-        <v-tabs v-model="tab" align-tabs="center" color="deep-purple-accent-4">
-          <v-tab :value="1" @click="" style="color: cadetblue;font-weight:
-               bolder; font-size:larger;" href="http://localhost:3000/" class="text-none">Início</v-tab>
-  
+  <template>
+    <v-card style="background-color: orangered;">
+      <v-tabs v-model="tab" align-tabs="center" color="deep-purple-accent-4">
+
+        <a href="http://localhost:3000/">
+          <v-tab :value="1" @click="" style="color: cadetblue; font-weight: bolder; 
+          font-size:larger;" class="text-none">Início</v-tab>
+        </a>
+
+        <a href="">
           <v-tab :value="2" @click="" style="color: cadetblue; font-weight: bold; 
-              font-size:large;" class="text-none" >Cupons</v-tab>
-  
-          <v-tab :value="3" @click="" style="color: cadetblue; font-weight: bold; 
-              font-size:large;" class="text-none" href="http://localhost:3000/cardapio">Cardápio</v-tab>
-  
-          <v-tab :value="4" @click="" style="color: cadetblue; font-weight: bold; 
-              font-size:large;" class="text-none">App BK</v-tab>
-  
-          <v-tab :value="5" @click="" style="color: cadetblue; font-weight: bold; 
-              font-size:large;" class="text-none">Clube BK</v-tab>
-  
+          font-size:large;" class="text-none">Cupons</v-tab>
+        </a>
+
+        <a href="http://localhost:3000/cardapio">
+          <v-tab :value="3" @click="" style="color: cadetblue; font-weight: bold;
+          font-size:large;" class="text-none">Cardápio</v-tab>
+        </a>
+
+        <a href="">
+          <v-tab :value="4" @click="" style="color: cadetblue; font-weight: bold;
+          font-size:large;" class="text-none">AppBK</v-tab>
+        </a>
+
+        <a href="">
+          <v-tab :value="5" @click="" style="color: cadetblue; font-weight: bold;
+          font-size:large;" class="text-none">ClubeBK</v-tab>
+        </a>
+
+        <a href="">
           <v-tab :value="6" @click="" style="color: cadetblue; font-weight: bold; 
-              font-size:large;" class="text-none">Delivery</v-tab>
-        </v-tabs>
-      </v-card>
-    </template>
+          font-size:large;" class="text-none">Delivery</v-tab>
+        </a>
+
+      </v-tabs>
+    </v-card>  
+  </template>
   
     <v-app>
       <v-container style="border-radius: 6%;">
@@ -42,17 +55,18 @@
                 <v-col>
                   <v-text-field 
                   variant="outlined" 
-                  label="Nome" 
-                  placeholder="nome" 
-                  v-model="cupom.type">
+                  label="Código" 
+                  placeholder="Código" 
+                  v-model="cupom.code">
                   </v-text-field>
                 </v-col>
+
                 <v-col>
                   <v-text-field 
                   variant="outlined" 
-                  label="Preço" 
-                  placeholder="price" 
-                  v-model="cupom.value">
+                  label="Tipo" 
+                  placeholder="Tipo" 
+                  v-model="cupom.type">
                   </v-text-field>
                 </v-col>
               </v-row>
@@ -61,9 +75,18 @@
                 <v-col>
                   <v-text-field 
                     variant="outlined" 
-                    label="Quantidade" 
-                    placeholder="Quantidade"
-                    v-model="cupom.use">
+                    label="Valor" 
+                    placeholder="Valor"
+                    v-model="cupom.value">
+                  </v-text-field>
+                </v-col>
+
+                <v-col>
+                  <v-text-field 
+                  variant="outlined" 
+                  label="Quantidade" 
+                  placeholder="Quantidade" 
+                  v-model="cupom.use">
                   </v-text-field>
                 </v-col>
               </v-row>
@@ -119,11 +142,10 @@
           loading: true,
           textoUsuario: null,
           cupom: {
-            name: null,
-            price: null,
-            image: null,
-            description: null,
-            idCategory: null,
+            code: null,
+            type: null,
+            value: null,
+            use: null,
           },
           tab: null,
           search: "",
@@ -133,12 +155,16 @@
               key: "id",
             },
             {
-              title: "Nomes",
-              key: "name",
+              title: "Tipo",
+              key: "type",
             },
             {
-              title: "Preço",
-              key: "price",
+              title: "Valor",
+              key: "value",
+            },
+            {
+              title: "Quantidade",
+              key: "use",
             },
             {
               title: "action",
@@ -152,7 +178,6 @@
   
       async created() {
         await this.getItems();
-        await this.getCategory();
       },
   
       computed: {
@@ -164,19 +189,27 @@
       watch: {
         ativo(valor) {
           if (valor == false) {
-            this.resetProduct();
+            this.resetCupom();
           }
         },
       },
   
       methods: {
+        resetCupom() {
+          this.product = {
+            nome: null,
+            status: null,
+          };
+          this.ativo = false;
+        },
+        
         async persist() {
           if (this.cupom.id) {
             const response = await this.$api.patch(`/cupom/persist/${this.cupom.id}`, this.cupom);
           } else {
             const response = await this.$api.post("/cupom/persist", this.cupom);
           }
-          this.resetProduct();
+          this.resetCupom();
           await this.getItems();
         },
   
@@ -193,10 +226,6 @@
           return response;
         },
   
-        mudaPagina() {
-          this.$router.push({ path: "/pagina" });
-        },
-  
         async deleteItem(item) {
           if (confirm(`Deseja deletar?`)) {
             const response = await this.$api.delete(`/cupom/delete/${item.id}`);
@@ -204,7 +233,7 @@
           if (response.type == "error") {
             alert(response.message);
           }
-          this.resetProduct();
+          this.resetCupom();
         },
   
       },

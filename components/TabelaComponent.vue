@@ -7,6 +7,8 @@
     height="300"
     @deleteItem="deleteItem"
     @editItem="editItem"
+    style="border: solid green 7px;
+    border-radius: 6px"
   >
     <template v-slot:item.action="{ item }">
       <v-icon class="me-2" size="small" @click="editItem(item)">
