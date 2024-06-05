@@ -4,6 +4,7 @@ const temaCustomizado = {
   dark: false,
   colors: {
     background: '#660000',
+    vish: '#7f181d',
     surface: '#FFFFFF',
     primary: '#6200EE',
     'primary-darken-1': '#3700B3',

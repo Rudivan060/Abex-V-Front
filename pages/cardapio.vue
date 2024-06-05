@@ -65,7 +65,7 @@
     </v-card>
   </template>
 
-  <body style="background-color: crimson">
+  <body class="degrade">
     <v-container>
       <v-row>
         <v-col v-for="(item, i) in items" :key="i" cols="12" md="4">
@@ -99,7 +99,7 @@
 
             <v-expand-transition>
               <div v-show="item.ativo">
-                null3<v-divider></v-divider>
+                <v-divider></v-divider>
                 <v-card-text> R$ {{ item.price }} </v-card-text>
 
                 <v-card-text>
@@ -185,5 +185,10 @@ export default {
 <style scoped>
   .text-none {
     text-decoration: none;
+  }
+
+  .degrade {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(182, 52, 25, 1) 0%, rgba(255, 190, 0, 1) 100%);
   }
 </style>

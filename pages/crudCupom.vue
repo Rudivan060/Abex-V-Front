@@ -20,9 +20,9 @@
 
         <a href="">
           <v-tab :value="4" @click="" style="color: cadetblue; font-weight: bold;
-          font-size:large;" class="text-none">AppBK</v-tab>
+          font-size:large;" class="text-none">Carrrinho</v-tab>
         </a>
-
+        
         <a href="">
           <v-tab :value="5" @click="" style="color: cadetblue; font-weight: bold;
           font-size:large;" class="text-none">ClubeBK</v-tab>

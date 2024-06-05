@@ -1,35 +1,35 @@
 <template>  
   <template>
-    <v-card style="background-color: orangered;">
-      <v-tabs v-model="tab" align-tabs="center" color="deep-purple-accent-4">
+    <v-card   style="background-color:  #fb911f;">
+      <v-tabs v-model="tab" align-tabs="center" >
 
         <a href="http://localhost:3000/">
-          <v-tab :value="1" @click="" style="color: cadetblue; font-weight: bolder; 
-          font-size:larger;" class="text-none">Início</v-tab>
+          <v-tab :value="1" @click="" style="color: #7f181d; font-weight: bolder; 
+          font-size:larger;"  class="text-none">Início</v-tab>
         </a>
 
         <a href="">
-          <v-tab :value="2" @click="" style="color: cadetblue; font-weight: bold; 
+          <v-tab :value="2" @click="" style="color: black; font-weight: bold; 
           font-size:large;" class="text-none">Cupons</v-tab>
         </a>
 
         <a href="http://localhost:3000/cardapio">
-          <v-tab :value="3" @click="" style="color: cadetblue; font-weight: bold;
+          <v-tab :value="3" @click="" style="color: black; font-weight: bold;
           font-size:large;" class="text-none">Cardápio</v-tab>
         </a>
 
         <a href="">
-          <v-tab :value="4" @click="" style="color: cadetblue; font-weight: bold;
+          <v-tab :value="4" @click="" style="color: black; font-weight: bold;
           font-size:large;" class="text-none">AppBK</v-tab>
         </a>
 
         <a href="">
-          <v-tab :value="5" @click="" style="color: cadetblue; font-weight: bold;
+          <v-tab :value="5" @click="" style="color: black; font-weight: bold;
           font-size:large;" class="text-none">ClubeBK</v-tab>
         </a>
 
         <a href="">
-          <v-tab :value="6" @click="" style="color: cadetblue; font-weight: bold; 
+          <v-tab :value="6" @click="" style="color: black; font-weight: bold; 
           font-size:large;" class="text-none">Delivery</v-tab>
         </a>
 
@@ -56,11 +56,11 @@
 </template>
 
 <script>
-export default {
-  data: () => ({
-    tab: null,
-  }),
-}
+  export default {
+    data: () => ({
+      tab: null,
+    }),
+  }
 </script>
 
 <style>
@@ -118,7 +118,7 @@ export default {
   section div.box pre{
     font-family: 'Times New Roman', Times, serif;
     font-weight: bolder;
-    color: green;
+    color: #9db543;
     font-size: 24px;
     max-height: 32px;
   }
