@@ -1,49 +1,52 @@
-<template>
+<template class="degrade">
   <template>
-    <v-card style="background-color: orangered;">
-      <v-tabs v-model="tab" align-tabs="center" color="deep-purple-accent-4">
-
-        <a href="http://localhost:3000/">
-          <v-tab :value="1" @click="" style="color: cadetblue; font-weight: bolder; 
-          font-size:larger;" class="text-none">Início</v-tab>
+    <v-card style="background-color:  #fb911f;">
+      <v-tabs v-model="tab" align-tabs="center" color="red">
+        <a href="http://localhost:3000/ademiro">
+          <v-icon class="bah">
+            mdi-account-lock
+          </v-icon>
         </a>
 
-        <a href="">
-          <v-tab :value="2" @click="" style="color: cadetblue; font-weight: bold; 
+        <a href="http://localhost:3000/">
+          <v-tab :value="1" @click="" style="color: darkred; font-weight: bolder; 
+          font-size:larger;" class="text-none">Início</v-tab>
+        </a>  
+
+        <a href="https://www.youtube.com/watch?v=ycHVUvvOwzY">
+          <v-tab :value="2" @click="" style="color: darkred; font-weight: bold; 
           font-size:large;" class="text-none">Cupons</v-tab>
         </a>
 
         <a href="http://localhost:3000/cardapio">
-          <v-tab :value="3" @click="" style="color: cadetblue; font-weight: bold;
+          <v-tab :value="3" @click="" style="color: darkred; font-weight: bold;
           font-size:large;" class="text-none">Cardápio</v-tab>
         </a>
 
-        <a href="">
-          <v-tab :value="4" @click="" style="color: cadetblue; font-weight: bold;
+        <a href="https://www.youtube.com/watch?v=hvL1339luv0">
+          <v-tab :value="4" @click="" style="color: darkred; font-weight: bold;
           font-size:large;" class="text-none">AppBK</v-tab>
         </a>
 
-        <a href="">
-          <v-tab :value="5" @click="" style="color: cadetblue; font-weight: bold;
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+          <v-tab :value="5" @click="" style="color: darkred; font-weight: bold;
           font-size:large;" class="text-none">ClubeBK</v-tab>
         </a>
-
-        <a href="">
-          <v-tab :value="6" @click="" style="color: cadetblue; font-weight: bold; 
-          font-size:large;" class="text-none">Delivery</v-tab>
+        
+        <a href="http://localhost:3000/login">
+          <v-icon class="bah" style="position: relative; width: 50%;">
+            mdi-login
+          </v-icon>
         </a>
 
       </v-tabs>
-    </v-card>  
+    </v-card>
   </template>
 
+  <div class="degrade">
   <v-app>
     <v-container>
-      <TabelaComponent titulo="Tabelasso" 
-        :items="items" 
-        :headers="headers" 
-        @editou="editItem" 
-        @deletou="deleteItem"
+      <TabelaComponent titulo="Tabelasso" :items="items" :headers="headers" @editou="editItem" @deletou="deleteItem"
         @abrir-dialog="() => ativo = true" />
       <v-dialog v-model="ativo" max-width="500">
         <v-card height="550" width="500" theme="dark">
@@ -73,10 +76,7 @@
 
             <v-row>
               <v-col>
-                <v-text-field 
-                  variant="outlined" 
-                  label="Descrição" 
-                  placeholder="descricione"
+                <v-text-field variant="outlined" label="Descrição" placeholder="descricione"
                   v-model="product.description">
                 </v-text-field>
               </v-col>
@@ -84,11 +84,7 @@
 
             <v-row>
               <v-col>
-                <v-autocomplete 
-                :items="category" 
-                item-title="name" 
-                item-value="id" 
-                v-model="product.idCategory">
+                <v-autocomplete :items="category" item-title="name" item-value="id" v-model="product.idCategory">
                 </v-autocomplete>
               </v-col>
             </v-row>
@@ -103,44 +99,28 @@
       </v-dialog>
     </v-container>
   </v-app>
+  </div>
 
   <v-card>
     <v-layout>
-      <v-navigation-drawer
-        expand-on-hover
-        rail
-        theme="dark"
-      >
+      <v-navigation-drawer expand-on-hover rail theme="dark">
         <v-list>
-          <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-            subtitle="sandra_a88@gmailcom"
-            title="Sandra Adams"
-          ></v-list-item>
+          <v-list-item prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg" subtitle="sandra_a88@gmailcom"
+            title="Sandra Adams"></v-list-item>
         </v-list>
-
-<v-speed-dial location="bottom right" transition="slide-x-reverse-transition">
-  <template v-slot:activator="{ props: activatorProps }">
-    <v-fab v-bind="activatorProps" size="large" icon="$vuetify"></v-fab>
-  </template>
-
-  <v-btn key="1" icon="$success"></v-btn>
-  <v-btn key="2" icon="$info"></v-btn>
-  <v-btn key="3" icon="$warning"></v-btn>
-  <v-btn key="4" icon="$error"></v-btn>
-</v-speed-dial>
 
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-home" to="/" title="Início" value="starred"></v-list-item>
-          <v-list-item href="http://localhost:3000/cardapio" prepend-icon="mdi-food" title="Cardápio" value="myfiles"></v-list-item>
+          <v-list-item href="http://localhost:3000/crudCupom" prepend-icon="mdi-ticket-percent-outline" title="Cardápio"
+            value="myfiles"></v-list-item>
           <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
           <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
         </v-list>
       </v-navigation-drawer>
       <v-main style="background-color: black;" theme="dark">
-        <slot/>
+        <slot />
       </v-main>
     </v-layout>
   </v-card>
@@ -261,3 +241,12 @@
     },
   };
 </script>
+
+<style>
+  .degrade {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(182, 52, 25, 1) 0%, rgba(255, 190, 0, 1) 100%);
+    background-repeat: no-repeat;
+    height: 100dvh;
+  }
+</style>

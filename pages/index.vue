@@ -1,40 +1,46 @@
-<template>  
+<template>
   <template>
-    <v-card   style="background-color:  #fb911f;">
-      <v-tabs v-model="tab" align-tabs="center" >
-
-        <a href="http://localhost:3000/">
-          <v-tab :value="1" @click="" style="color: #7f181d; font-weight: bolder; 
-          font-size:larger;"  class="text-none">Início</v-tab>
+    <v-card style="background-color:  #fb911f;">
+      <v-tabs v-model="tab" align-tabs="center" color="red">
+        <a href="http://localhost:3000/ademiro">
+          <v-icon class="bah">
+            mdi-account-lock
+          </v-icon>
         </a>
 
-        <a href="">
-          <v-tab :value="2" @click="" style="color: black; font-weight: bold; 
+        <a href="http://localhost:3000/">
+          <v-tab :value="1" @click="" style="color: darkred; font-weight: bolder; 
+          font-size:larger;" class="text-none">Início</v-tab>
+        </a>  
+
+        <a href="https://www.youtube.com/watch?v=ycHVUvvOwzY">
+          <v-tab :value="2" @click="" style="color: darkred; font-weight: bold; 
           font-size:large;" class="text-none">Cupons</v-tab>
         </a>
 
         <a href="http://localhost:3000/cardapio">
-          <v-tab :value="3" @click="" style="color: black; font-weight: bold;
+          <v-tab :value="3" @click="" style="color: darkred; font-weight: bold;
           font-size:large;" class="text-none">Cardápio</v-tab>
         </a>
 
-        <a href="">
-          <v-tab :value="4" @click="" style="color: black; font-weight: bold;
+        <a href="https://www.youtube.com/watch?v=hvL1339luv0">
+          <v-tab :value="4" @click="" style="color: darkred; font-weight: bold;
           font-size:large;" class="text-none">AppBK</v-tab>
         </a>
 
-        <a href="">
-          <v-tab :value="5" @click="" style="color: black; font-weight: bold;
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+          <v-tab :value="5" @click="" style="color: darkred; font-weight: bold;
           font-size:large;" class="text-none">ClubeBK</v-tab>
         </a>
-
-        <a href="">
-          <v-tab :value="6" @click="" style="color: black; font-weight: bold; 
-          font-size:large;" class="text-none">Delivery</v-tab>
+        
+        <a href="http://localhost:3000/login">
+          <v-icon class="bah" style="position: relative; width: 50%;">
+            mdi-login
+          </v-icon>
         </a>
 
       </v-tabs>
-    </v-card>  
+    </v-card>
   </template>
 
   <body>
@@ -48,10 +54,10 @@
             O AMOR PODE ACABAR
             O BOM GOSTO NÃO!
           </pre>
-          <img src="/imagem/burgasso.png" alt="" style="height: 65%; width: 65%;">
+          <img src="/imagem/burgasso.png" alt="" style="height: 75%; width: 75%;">
         </div>
       </div>
-    </section>  
+    </section>
   </body>
 </template>
 
@@ -118,12 +124,16 @@
   section div.box pre{
     font-family: 'Times New Roman', Times, serif;
     font-weight: bolder;
-    color: #9db543;
+    color: #b59143;
     font-size: 24px;
     max-height: 32px;
   }
 
   section div.box v-tab{
     color: yellow;
+  }
+
+  .bah{
+    color:darkred
   }
 </style>
