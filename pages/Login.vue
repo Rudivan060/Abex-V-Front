@@ -75,7 +75,7 @@
   
               <v-card class="mb-12" color="surface-variant" variant="tonal">
                 <v-card-text class="text-medium-emphasis text-caption">
-                  Warning: Depois de 3 tentativas de login falhas, sua conta será bloqueada temporariamente por 3 horas. 
+                  AVISO: Depois de 3 tentativas de login falhas, sua conta será bloqueada temporariamente por 3 horas. 
                   caso não queira esperar, você pode clicar em "Esqueci minha senha?" acima da senha de usuário.
                 </v-card-text>
               </v-card>
@@ -85,7 +85,7 @@
               </v-btn>
   
               <v-card-text class="text-center">
-                <a class="text-blue text-decoration-none" href="#" rel="noopener noreferrer" target="_blank">
+                <a class="text-blue text-decoration-none" href="http://localhost:3000/cadastro" rel="noopener noreferrer" target="_blank">
                   Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
                 </a>
               </v-card-text>

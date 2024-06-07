@@ -10,11 +10,11 @@
     style="border: solid green 7px;
     border-radius: 6px"
   >
-    <template v-slot:item.action="{ item }">
-      <v-icon class="me-2" size="small" @click="editItem(item)">
+    <template v-slot:item.action="{ item }"> 
+      <v-icon class="me-2" size="small" @click="editItem(item)" style="color: goldenrod;">
         mdi-pencil
       </v-icon>
-      <v-icon size="small" color="error" @click="deleteItem(item)">
+      <v-icon size="small" color="error" @click="deleteItem(item)" style="color: violet;">
         mdi-delete
       </v-icon>
     </template>

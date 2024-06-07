@@ -11,7 +11,7 @@
         <a href="http://localhost:3000/">
           <v-tab :value="1" @click="" style="color: darkred; font-weight: bolder; 
           font-size:larger;" class="text-none">Início</v-tab>
-        </a>  
+        </a>
 
         <a href="https://www.youtube.com/watch?v=ycHVUvvOwzY">
           <v-tab :value="2" @click="" style="color: darkred; font-weight: bold; 
@@ -32,7 +32,7 @@
           <v-tab :value="5" @click="" style="color: darkred; font-weight: bold;
           font-size:large;" class="text-none">ClubeBK</v-tab>
         </a>
-        
+
         <a href="http://localhost:3000/login">
           <v-icon class="bah" style="position: relative; width: 50%;">
             mdi-login
@@ -47,12 +47,7 @@
     <v-container>
       <v-row>
         <v-col v-for="(item, i) in items" :key="i" cols="12" md="4">
-          <v-card
-            class="mx-auto"
-            max-width="344"
-            style="border: solid black 4px"
-            elevation="24"
-          >
+          <v-card class="mx-auto" max-width="344" style="border: solid black 4px" elevation="24">
             <v-img height="200px" :src="item.image" cover></v-img>
             <v-card-item>
               <div>
@@ -61,18 +56,49 @@
             </v-card-item>
 
             <v-card-actions>
-              <v-btn 
-                color="orange-lighten-2" 
-                text
-                @click="abrirDialog()"
-                >
-                Encomendar
-              </v-btn>
+
+              <v-dialog max-width="500">
+                <template v-slot:activator="{ props: activatorProps }">
+                  <v-btn v-bind="activatorProps" color="green" text="Encomendar" variant="flat"></v-btn>
+                </template>
+
+                <template v-slot:default="{ isActive }">
+                  <v-card 
+                  style="border: solid black 4px;"
+                  elevation="24"
+                  >
+
+                    <v-img height="4x00px" :src="item.image" cover></v-img>
+
+                    <v-form>
+                      <v-text-field 
+                        v-model="quantidade" 
+                        :rules="rules" 
+                        label="Quantidade" 
+                        hide-details
+                      ></v-text-field>
+  
+                      <v-text-field 
+                        v-model="observacoes" 
+                        :rules="rules" 
+                        label="Obs" 
+                      ></v-text-field>
+  
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+  
+                        <v-btn text="Pedir" class="mt-2" type="submit" block></v-btn>
+                      </v-card-actions>
+                    </v-form>
+
+                  </v-card>
+                </template>
+              </v-dialog>
+
+
               <v-spacer></v-spacer>
-              <v-btn
-                :icon="item.ativo ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-                @click="item.ativo = !item.ativo"
-              ></v-btn>
+              <v-btn :icon="item.ativo ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+                @click="item.ativo = !item.ativo"></v-btn>
             </v-card-actions>
 
             <v-expand-transition>
@@ -109,28 +135,18 @@ export default {
       },
       tab: null,
       search: "",
-      headers: [
-        {
-          title: "Identificador",
-          key: "id",
-        },
-        {
-          title: "Nomes",
-          key: "name",
-        },
-        {
-          title: "Preço",
-          key: "price",
-        },
-        {
-          title: "action",
-          key: "action",
-          sortable: false,
-        },
-      ],
       tab: 3,
       show: false,
       items: [],
+      quantidade: '',
+      observacoes: '',
+      rules: [
+        value => {
+          if (value) return true
+
+          return 'Deve inserir todas as informações!'
+        },
+      ],
     };
   },
 

@@ -65,14 +65,14 @@
               </v-col>
             </v-row>
 
-            <v-row>
-              <v-col>
-                <img :src="product.image" style="max-width: 100px; max-height: 100px">
-              </v-col>
-              <v-col class="justify-center align-center text-center" cols="8" sm="6" style="justify-content: center;">
-                <v-text-field v-model="product.image" label="Link da imagem" />
-              </v-col>
-            </v-row>
+              <v-row>
+                <v-col>
+                  <img :src="product.image" style="max-width: 100px; max-height: 100px">
+                </v-col>
+                <v-col class="justify-center align-center text-center" cols="8" sm="6" style="justify-content: center;">
+                  <v-text-field v-model="product.image" label="Link da imagem" />
+                </v-col>
+              </v-row>
 
             <v-row>
               <v-col>
@@ -112,8 +112,8 @@
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-home" to="/" title="Início" value="starred"></v-list-item>
-          <v-list-item href="http://localhost:3000/crudCupom" prepend-icon="mdi-ticket-percent-outline" title="Cardápio"
+          <v-list-item prepend-icon="mdi-home" to="/" title="Início" value="starred"</v-list-item>
+          <v-list-item href="http://localhost:3000/crudCupom" prepend-icon="mdi-ticket-percent-outline" title="Cupons"
             value="myfiles"></v-list-item>
           <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
           <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
