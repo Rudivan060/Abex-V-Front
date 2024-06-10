@@ -2,7 +2,7 @@
   <template>
     <v-card style="background-color:  #fb911f;">
       <v-tabs v-model="tab" align-tabs="center" color="red">
-        <a href="http://localhost:3000/ademiro">
+        <a href="http://localhost:3000/ademiro/ademiro">
           <v-icon class="bah">
             mdi-account-lock
           </v-icon>

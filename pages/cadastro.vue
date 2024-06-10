@@ -2,7 +2,7 @@
   <template>
     <v-card style="background-color:  #fb911f;">
       <v-tabs v-model="tab" align-tabs="center" color="red">
-        <a href="http://localhost:3000/ademiro">
+        <a href="http://localhost:3000/ademiro/ademiro">
           <v-icon class="bah">
             mdi-account-lock
           </v-icon>
@@ -44,26 +44,27 @@
   </template>
 
   <div class="degrade">
-    <v-card class="mx-auto" image="https://cdn.vuetifyjs.com/docs/images/cards/dark-beach.jpg" style="height: 525px;
+    <v-card class="mx-auto" style="height: 525px;
     width: 600px;
     position: absolute;
     top: 20%;
     left: 30%;
     border-radius: 16px;
+    border: 5px solid darkred;
     ">
 
       <v-form>
-        <v-text-field v-model="username" :rules="rules" label="Usuario"></v-text-field>
+        <v-text-field v-model="username" :rules="rules" label="Usuario" style="color: whitesmoke;"></v-text-field>
 
-        <v-text-field v-model="cpf" :rules="rules" label="CPF"></v-text-field>
+        <v-text-field v-model="cpf" :rules="rules" label="CPF" style="color: whitesmoke;"></v-text-field>
 
-        <v-text-field v-model="name" :rules="rules" label="Nome"></v-text-field>
+        <v-text-field v-model="name" :rules="rules" label="Nome" style="color: whitesmoke;"></v-text-field>
 
-        <v-text-field v-model="phone" :rules="rules" label="Telefone"></v-text-field>
+        <v-text-field v-model="phone" :rules="rules" label="Telefone" style="color: whitesmoke;"></v-text-field>
 
-        <v-text-field v-model="passwordHash" :rules="rules" label="Senha"></v-text-field>
+        <v-text-field v-model="passwordHash" :rules="rules" label="Senha" style="color: whitesmoke;"></v-text-field>
 
-        <v-text-field v-model="email" :rules="rules" label="E-mail"></v-text-field>
+        <v-text-field v-model="email" :rules="rules" label="E-mail" style="color: whitesmoke;"></v-text-field>
 
       </v-form>
 

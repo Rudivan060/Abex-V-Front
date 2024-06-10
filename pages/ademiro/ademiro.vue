@@ -2,7 +2,7 @@
   <template>
     <v-card style="background-color:  #fb911f;">
       <v-tabs v-model="tab" align-tabs="center" color="red">
-        <a href="http://localhost:3000/ademiro">
+        <a href="http://localhost:3000/ademiro/ademiro">
           <v-icon class="bah">
             mdi-account-lock
           </v-icon>
@@ -43,7 +43,7 @@
     </v-card>
   </template>
 
-  <div class="degrade">
+  <div>
   <v-app>
     <v-container>
       <TabelaComponent titulo="Tabelasso" :items="items" :headers="headers" @editou="editItem" @deletou="deleteItem"
@@ -56,7 +56,7 @@
           <v-card-text>
             <v-row>
               <v-col>
-                <v-text-field variant="outlined" label="Nome" placeholder="nome" v-model="product.name">
+                <v-text-field variant="outlined" label="Nome" placeholder="nome" v-model="user.name">
                 </v-text-field>
               </v-col>
               <v-col>
@@ -105,15 +105,15 @@
     <v-layout>
       <v-navigation-drawer expand-on-hover rail theme="dark">
         <v-list>
-          <v-list-item prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg" subtitle="sandra_a88@gmailcom"
-            title="Sandra Adams"></v-list-item>
+          <v-list-item prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg" subtitle="Ademiro@gmail.com"
+            title="Ademiro"></v-list-item>
         </v-list>
 
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-home" to="/" title="Início" value="starred"</v-list-item>
-          <v-list-item href="http://localhost:3000/crudCupom" prepend-icon="mdi-ticket-percent-outline" title="Cupons"
+          <v-list-item prepend-icon="mdi-home" to="/" title="Início" value="starred"></v-list-item>
+          <v-list-item href="http://localhost:3000/ademiro/crudCupom" prepend-icon="mdi-ticket-percent-outline" title="Cupons"
             value="myfiles"></v-list-item>
           <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
           <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
@@ -206,8 +206,11 @@
 
       resetProduct() {
         this.product = {
-          nome: null,
-          status: null,
+          name: null,
+          price: null,
+          image: null,
+          description: null,
+          idCategory: null,
         };
         this.ativo = false;
       },
