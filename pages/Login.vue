@@ -13,7 +13,7 @@
           font-size:larger;" class="text-none">Início</v-tab>
         </a>
 
-        <a href="https://www.youtube.com/watch?v=ycHVUvvOwzY">
+        <a href="http://localhost:3000/cupom">
           <v-tab :value="2" @click="" style="color: darkred; font-weight: bold; 
           font-size:large;" class="text-none">Cupons</v-tab>
         </a>

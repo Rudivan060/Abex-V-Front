@@ -48,69 +48,17 @@
       <v-row>
         <v-col v-for="(item, i) in items" :key="i" cols="12" md="4">
           <v-card class="mx-auto" max-width="344" style="border: solid black 4px" elevation="24">
-            <v-img height="200px" :src="item.image" cover></v-img>
             <v-card-item>
               <div>
-                <div class="text-h6 mb-1">{{ item.name }}</div>
+                <div class="text-h6 mb-1">Código: {{ item.code }}</div>
+              </div>
+              <div>
+                <div class="text-h6 mb-1">Valor: {{ item.value }}{{ item.type }} </div>
+              </div>
+              <div>
+                <div class="text-h6 mb-1"> Disponíveis: {{ item.use }}</div>
               </div>
             </v-card-item>
-
-            <v-card-actions>
-
-              <v-dialog max-width="500">
-                <template v-slot:activator="{ props: activatorProps }">
-                  <v-btn v-bind="activatorProps" color="green" text="Encomendar" variant="flat"></v-btn>
-                </template>
-
-                <template v-slot:default="{ isActive }">
-                  <v-card 
-                  style="border: solid black 4px;"
-                  elevation="24"
-                  >
-
-                    <v-img height="4x00px" :src="item.image" cover></v-img>
-
-                    <v-form>
-                      <v-text-field 
-                        v-model="quantidade" 
-                        :rules="rules" 
-                        label="Quantidade" 
-                        hide-details
-                      ></v-text-field>
-  
-                      <v-text-field 
-                        v-model="observacoes" 
-                        :rules="rules" 
-                        label="Obs" 
-                      ></v-text-field>
-  
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-  
-                        <v-btn text="Pedir" class="mt-2" type="submit" block></v-btn>
-                      </v-card-actions>
-                    </v-form>
-
-                  </v-card>
-                </template>
-              </v-dialog>
-
-
-              <v-spacer></v-spacer>
-              <v-btn :icon="item.ativo ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-                @click="item.ativo = !item.ativo"></v-btn>
-            </v-card-actions>
-
-            <v-expand-transition>
-              <div v-show="item.ativo">
-                <v-divider></v-divider>
-                <v-card-text> R$ {{ item.price }} </v-card-text>
-
-                <v-card-text>
-                  Ingredientes: {{ item.description }}
-                </v-card-text>
-              </div>
-            </v-expand-transition>
           </v-card>
         </v-col>
       </v-row>
@@ -126,16 +74,15 @@ export default {
       ativo: false,
       loading: true,
       textoUsuario: null,
-      product: {
-        name: null,
-        price: null,
-        image: null,
-        description: null,
-        idCategory: null,
+      cupom: {
+        code: null,
+        type: null,
+        value: null,
+        use: null,
       },
       tab: null,
       search: "",
-      tab: 3,
+      tab: 2,
       show: false,
       items: [],
       quantidade: '',
@@ -156,7 +103,7 @@ export default {
 
   methods: {
     async getItems() {
-      const response = await this.$api.get("/product");
+      const response = await this.$api.get("/cupom");
       this.items = response.response;
       this.items = this.items.map((item) => {
         return {
@@ -168,8 +115,8 @@ export default {
     },
 
     async create() {
-      const response = await this.$api.post("/product/persist", this.product);
-      this.resetProduct();
+      const response = await this.$api.post("/cupom/persist", this.cupom);
+      this.resetCupom();
       await this.getItems();
     },
   },
