@@ -11,7 +11,7 @@
         <a href="http://localhost:3000/">
           <v-tab :value="1" @click="" style="color: darkred; font-weight: bolder; 
           font-size:larger;" class="text-none">Início</v-tab>
-        </a>  
+        </a>
 
         <a href="https://www.youtube.com/watch?v=ycHVUvvOwzY">
           <v-tab :value="2" @click="" style="color: darkred; font-weight: bold; 
@@ -32,7 +32,7 @@
           <v-tab :value="5" @click="" style="color: darkred; font-weight: bold;
           font-size:large;" class="text-none">ClubeBK</v-tab>
         </a>
-        
+
         <a href="http://localhost:3000/login">
           <v-icon class="bah" style="position: relative; width: 50%;">
             mdi-login
@@ -44,26 +44,26 @@
   </template>
 
   <div>
-  <v-app>
-    <v-container>
-      <TabelaComponent titulo="Tabelasso" :items="items" :headers="headers" @editou="editItem" @deletou="deleteItem"
-        @abrir-dialog="() => ativo = true" />
-      <v-dialog v-model="ativo" max-width="500">
-        <v-card height="550" width="500" theme="dark">
-          <v-card-title>
-            {{ tituloDialog }}
-          </v-card-title>
-          <v-card-text>
-            <v-row>
-              <v-col>
-                <v-text-field variant="outlined" label="Nome" placeholder="nome" v-model="user.name">
-                </v-text-field>
-              </v-col>
-              <v-col>
-                <v-text-field variant="outlined" label="Preço" placeholder="price" v-model="product.price">
-                </v-text-field>
-              </v-col>
-            </v-row>
+    <v-app>
+      <v-container>
+        <TabelaComponent titulo="Tabelasso" :items="items" :headers="headers" @editou="editItem" @deletou="deleteItem"
+          @abrir-dialog="() => ativo = true" />
+        <v-dialog v-model="ativo" max-width="500">
+          <v-card height="550" width="500" theme="dark">
+            <v-card-title>
+              {{ tituloDialog }}
+            </v-card-title>
+            <v-card-text>
+              <v-row>
+                <v-col>
+                  <v-text-field variant="outlined" label="Nome" placeholder="nome" v-model="user.name">
+                  </v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field variant="outlined" label="Preço" placeholder="price" v-model="product.price">
+                  </v-text-field>
+                </v-col>
+              </v-row>
 
               <v-row>
                 <v-col>
@@ -74,53 +74,55 @@
                 </v-col>
               </v-row>
 
-            <v-row>
-              <v-col>
-                <v-text-field variant="outlined" label="Descrição" placeholder="descricione"
-                  v-model="product.description">
-                </v-text-field>
-              </v-col>
-            </v-row>
+              <v-row>
+                <v-col>
+                  <v-text-field variant="outlined" label="Descrição" placeholder="descricione"
+                    v-model="product.description">
+                  </v-text-field>
+                </v-col>
+              </v-row>
 
-            <v-row>
-              <v-col>
-                <v-autocomplete :items="category" item-title="name" item-value="id" v-model="product.idCategory">
-                </v-autocomplete>
-              </v-col>
-            </v-row>
-          </v-card-text>
+              <v-row>
+                <v-col>
+                  <v-autocomplete :items="category" item-title="name" item-value="id" v-model="product.idCategory">
+                  </v-autocomplete>
+                </v-col>
+              </v-row>
+            </v-card-text>
 
-          <v-card-actions>
-            <v-btn variant="outlined" class="text-none" @click="persist()">
-              Enviar
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-container>
-  </v-app>
+            <v-card-actions>
+              <v-btn variant="outlined" class="text-none" @click="persist()">
+                Enviar
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-container>
+    </v-app>
   </div>
 
   <v-card>
     <v-layout>
       <v-navigation-drawer expand-on-hover rail theme="dark">
         <v-list>
-          <v-list-item prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg" subtitle="Ademiro@gmail.com"
-            title="Ademiro"></v-list-item>
+          <v-list-item prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg" subtitle="sandra_a88@gmailcom"
+            title="Sandra Adams"></v-list-item>
         </v-list>
 
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-home" to="/" title="Início" value="starred"></v-list-item>
-          <v-list-item href="http://localhost:3000/ademiro/crudCupom" prepend-icon="mdi-ticket-percent-outline" title="Cupons"
-            value="myfiles"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
-          <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
+          <v-list-item href="http://localhost:3000/ademiro/crudCupom" prepend-icon="mdi-ticket-percent-outline"
+            title="Cardápio" value="myfiles"></v-list-item>
+          <v-list-item href="http://localhost:3000/ademiro/crudAddress" prepend-icon="mdi-google-maps" title="Endereço"
+            value="localizacao"></v-list-item>
+          <v-list-item href="http://localhost:3000/ademiro/crudPayment" prepend-icon="mdi-credit-card-outline"
+            title="pagamentos" value="opcao"></v-list-item>
         </v-list>
       </v-navigation-drawer>
       <v-main style="background-color: black;" theme="dark">
-        <slot />
+        <slot/>
       </v-main>
     </v-layout>
   </v-card>

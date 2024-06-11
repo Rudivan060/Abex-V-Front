@@ -78,26 +78,26 @@
               </v-col>
 
               <v-col>
-                <v-text-field variant="outlined" label="Estada" placeholder="Estada" v-model="address.street">
+                <v-text-field variant="outlined" label="Rua" placeholder="Rua" v-model="address.street">
                 </v-text-field>
               </v-col>
             </v-row>
 
             <v-row>
               <v-col>
-                <v-text-field variant="outlined" label="Cidade" placeholder="Cidade" v-model="address.district">
+                <v-text-field variant="outlined" label="País" placeholder="País" v-model="address.district">
                 </v-text-field>
               </v-col>
 
               <v-col>
-                <v-text-field variant="outlined" label="Estada" placeholder="Estada" v-model="address.numberForget">
+                <v-text-field variant="outlined" label="Número de Recuperação" placeholder="Número de Recuperação" v-model="address.numberForget">
                 </v-text-field>
               </v-col>
             </v-row>
 
             <v-row>
               <v-col>
-                <v-text-field variant="outlined" label="Estada" placeholder="Estada" v-model="address.idUser">
+                <v-text-field variant="outlined" label="Id Usuário" placeholder="Id Usuário" v-model="address.idUser">
                 </v-text-field>
               </v-col>
             </v-row>
@@ -125,10 +125,12 @@
 
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-home" to="/" title="Início" value="starred"></v-list-item>
-          <v-list-item href="http://localhost:3000/crudaddress" prepend-icon="mdi-ticket-percent-outline"
+          <v-list-item href="http://localhost:3000/ademiro/crudCupom" prepend-icon="mdi-ticket-percent-outline"
             title="Cardápio" value="myfiles"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
-          <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
+          <v-list-item href="http://localhost:3000/ademiro/crudAddress" prepend-icon="mdi-google-maps" title="Endereço" 
+            value="localizacao"></v-list-item>
+          <v-list-item href="http://localhost:3000/ademiro/crudPayment" prepend-icon="mdi-credit-card-outline" 
+            title="pagamentos" value="opcao"></v-list-item>
         </v-list>
       </v-navigation-drawer>
       <v-main style="background-color: black;" theme="dark">
@@ -142,7 +144,6 @@
   export default {
     data: () => {
       return {
-        valor: 0,
         ativo: false,
         loading: true,
         textoUsuario: null,
@@ -193,16 +194,21 @@
     watch: {
       ativo(valor) {
         if (valor == false) {
-          this.resetaddress();
+          this.resetaddres1s();
         }
       },
     },
   
     methods: {
       resetaddress() {
-        this.product = {
-          nome: null,
-          status: null,
+        this.address = {
+          zipCode: null,
+          state: null,
+          city: null,
+          street: null,
+          district: null,
+          numberForget: null,
+          idUser: null,
         };
         this.ativo = false;
       },
@@ -211,7 +217,7 @@
         if (this.address.id) {
           const response = await this.$api.patch(`/address/persist/${this.address.id}`, this.address);
         } else {
-          const response = await this.$api.post("/address/persist", this.address);
+          const response = await this.$api.post("address/persist", this.address);
         }
         this.resetaddress();
         await this.getItems();
@@ -237,7 +243,7 @@
         if (response.type == "error") {
           alert(response.message);
         }
-        this.resetaddress();
+        this.resetaddress();value
       },
   
     },
