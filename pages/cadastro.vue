@@ -54,23 +54,30 @@
     ">
 
       <v-form>
-        <v-text-field v-model="username" :rules="rules" label="Usuario" style="color: whitesmoke;"></v-text-field>
+        <v-text-field v-model="user.username" :rules="rules" label="Usuario" style="color: whitesmoke;"></v-text-field>
 
-        <v-text-field v-model="cpf" :rules="rules" label="CPF" style="color: whitesmoke;"></v-text-field>
+        <v-text-field v-model="user.cpf" :rules="rules" label="CPF" style="color: whitesmoke;"></v-text-field>
 
-        <v-text-field v-model="name" :rules="rules" label="Nome" style="color: whitesmoke;"></v-text-field>
+        <v-text-field v-model="user.name" :rules="rules" label="Nome" style="color: whitesmoke;"></v-text-field>
 
-        <v-text-field v-model="phone" :rules="rules" label="Telefone" style="color: whitesmoke;"></v-text-field>
+        <v-text-field v-model="user.phone" :rules="rules" label="Telefone" style="color: whitesmoke;"></v-text-field>
 
-        <v-text-field v-model="passwordHash" :rules="rules" label="Senha" style="color: whitesmoke;"></v-text-field>
+        <v-text-field v-model="user.password" :rules="rules" label="Senha" style="color: whitesmoke;"></v-text-field>
 
-        <v-text-field v-model="email" :rules="rules" label="E-mail" style="color: whitesmoke;"></v-text-field>
+        <v-text-field v-model="user.email" :rules="rules" label="E-mail" style="color: whitesmoke;"></v-text-field>
 
       </v-form>
 
       <template v-slot:actions>
-        <v-btn append-icon="mdi-chevron-right" color="yellow" text="Cadastrar" variant="outlined" block position:
-          absolute;></v-btn>
+        <v-btn 
+        append-icon="mdi-chevron-right" 
+        color="yellow" 
+        text="Cadastrar" 
+        variant="outlined" 
+        block position:
+        absolute;
+        @click="registerUser"
+        ></v-btn>
 
       </template>
     </v-card>
@@ -82,12 +89,14 @@ export default {
   data: () => ({
     tab: null,
     visible: false,
-    username: '',
-    cpf: '',
-    name: '',
-    phone: '',
-    passwordHash: '',
-    email: '',
+    user : {
+      username: null,
+      cpf: null,
+      name: null,
+      phone: null,
+      password: null,
+      email: null,
+    },
     rules: [
       value => {
         if (value) return true
@@ -95,7 +104,28 @@ export default {
         return 'O campo não deve Ficar vazio!'
       },
     ],
+
+    items: [],
   }),
+
+  methods: {
+    async registerUser() {
+        const response = await this.$api.post('/user/register', this.user);
+        this.resetUser();
+      },
+    
+    resetUser() {
+      this.user = {
+        username: null,
+        cpf: null,
+        name:null,
+        phone: null,
+        password: null,
+        email: null,
+      };
+      this.ativo = false;
+    },
+  }
 }
 </script>
 
