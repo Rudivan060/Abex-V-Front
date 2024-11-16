@@ -5,7 +5,7 @@
     :search="search"
     theme="light"
     height="300"
-    style="border: solid green 7px;
+    style="border: solid grey 4px;
     border-radius: 6px"
     @deleteItem="deleteItem"
     @editItem="editItem"
