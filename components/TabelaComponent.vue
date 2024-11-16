@@ -5,10 +5,10 @@
     :search="search"
     theme="light"
     height="300"
-    @deleteItem="deleteItem"
-    @editItem="editItem"
     style="border: solid green 7px;
     border-radius: 6px"
+    @deleteItem="deleteItem"
+    @editItem="editItem"
   >
     <template v-slot:item.action="{ item }"> 
       <v-icon class="me-2" size="small" @click="editItem(item)" style="color: goldenrod;">
@@ -35,7 +35,7 @@
         variant="outlined"
         hide-details
         single-line
-      ></v-text-field>
+      />
     </template>
   </v-data-table>
 </template>
@@ -43,22 +43,29 @@
 <script>
 export default {
   name: "TabelaComponent",
+  props: {
+    titulo: {
+      type: String,
+      default: null,
+    },
+    headers: {
+      type: Array,
+      default: null,
+    },
+    items: {
+      type: Array,
+      default: null,
+    },
+  },
+
+  emits: ["editou", "deletou", "abrir-dialog", "dialog-edit"],
+
   data() {
     return {
       search: "",
     };
   },
-  props: {
-    titulo: {
-      type: String,
-    },
-    headers: {
-      type: Array,
-    },
-    items: {
-      type: Array,
-    },
-  },
+
   methods: {
     editItem(item) {
       this.$emit("editou", item);
@@ -68,6 +75,9 @@ export default {
     },
     abrirDialog() {
       this.$emit("abrir-dialog");
+    },
+    dialogEdit() {
+      this.$emit("dialog-edit");
     },
   },
 };
