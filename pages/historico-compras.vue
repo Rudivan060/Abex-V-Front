@@ -3,7 +3,7 @@
       <v-app>
         <v-container>
           <TabelaComponent 
-            titulo="Comandas" 
+            titulo="Histórico Compras" 
             :items="items" 
             :headers="headers" 
             @editou="editItem" 
@@ -15,41 +15,40 @@
             v-model="ativo" 
             max-width="500"
           >
-            <v-card height="450" width="500" theme="dark">
+            <v-card height="350" width="500" theme="dark">
               <v-card-title>
                 Criar
               </v-card-title>
               <v-card-text>
                 <v-row>
                   <v-col>
-                    <v-text-field 
-                      v-model="comanda.data"
-                      placeholder="Data" 
-                      item-title="data" 
-                      item-value="data"
+                    <v-autocomplete 
+                      v-model="historicoCompras.idConsumidor"
+                      :items="consumidor" 
+                      placeholder="Id do Serviço"
+                      item-title="label" 
+                      item-value="idConsumidor"
                     />
                   </v-col>
-                </v-row>
 
-                <v-row>
-                  <v-col>
-                    <v-text-field 
-                      v-model="comanda.hora"
-                      placeholder="Hora de Cadastro" 
-                      item-title="hora" 
-                      item-value="hora"
-                    />
-                  </v-col>
-                </v-row>
-
-                <v-row>
                   <v-col>
                     <v-autocomplete 
-                      v-model="comanda.idPedido"
+                      v-model="historicoCompras.idPedido"
                       :items="pedido" 
                       placeholder="Id do Pedido"
                       item-title="label" 
-                      item-value="id"
+                      item-value="idPedido"
+                    />
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col>
+                    <v-text-field 
+                      v-model="historicoCompras.data"
+                      placeholder="Data"
+                      item-title="data" 
+                      item-value="data"
                     />
                   </v-col>
                 </v-row>
@@ -68,7 +67,7 @@
             max-width="500"
           >
             <v-card 
-              height="550" 
+              height="350" 
               width="500" 
               theme="dark"
             >
@@ -78,34 +77,33 @@
               <v-card-text>
                 <v-row>
                   <v-col>
-                    <v-text-field 
-                      v-model="comanda.data"
-                      placeholder="Nome" 
-                      item-title="nome" 
-                      item-value="nome"
+                    <v-autocomplete 
+                      v-model="historicoCompras.idConsumidor"
+                      :items="consumidor" 
+                      placeholder="Id do Serviço"
+                      item-title="label" 
+                      item-value="idConsumidor"
                     />
                   </v-col>
-                </v-row>
 
-                <v-row>
-                  <v-col>
-                    <v-text-field 
-                      v-model="comanda.hora"
-                      placeholder="Nome" 
-                      item-title="nome" 
-                      item-value="nome"
-                    />
-                  </v-col>
-                </v-row>
-
-                <v-row>
                   <v-col>
                     <v-autocomplete 
-                      v-model="comanda.idPedido"
+                      v-model="historicoCompras.idPedido"
                       :items="pedido" 
-                      placeholder="Presença"
+                      placeholder="Id do Pedido"
                       item-title="label" 
                       item-value="idPedido"
+                    />
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col>
+                    <v-text-field 
+                      v-model="historicoCompras.data"
+                      placeholder="Data"
+                      item-title="data" 
+                      item-value="data"
                     />
                   </v-col>
                 </v-row>
@@ -134,10 +132,9 @@
           textoUsuario: null,
           tab: null,
           search: "",
-          comanda: {
-            id: null,
+          historicoCompras: {
             data: null,
-            hora: null,
+            idConsumidor: null,
             idPedido: null,
           },
           headers: [
@@ -146,8 +143,16 @@
               key: "id",
             },
             {
-              title: "Hora de Pedido",
-              key: "hora",
+              title: "Data",
+              key: "data",
+            },
+            {
+              title: "Id do Pedido",
+              key: "idPedido",
+            },
+            {
+              title: "Id do Consumidor",
+              key: "idConsumidor",
             },
             {
               title: "",
@@ -157,6 +162,7 @@
           ],
           items: [],
           pedido: [],
+          consumidor: [],
         };
       },
 
@@ -181,14 +187,14 @@
       async created() {
         await this.getItems();
         await this.getIdPedido();
+        await this.getIdConsumidor();
       },
 
       methods: {
         resetUsuario() {
-          this.comanda = {
-            id: null,
+          this.historicoCompras = {
             data: null,
-            hora: null,
+            idConsumidor: null,
             idPedido: null,
           };
           this.ativo = false;
@@ -198,7 +204,7 @@
         async getItems() {
           this.loading = true;
           try {
-            const response = await this.$api.get("/comanda");
+            const response = await this.$api.get("/historico-compras");
             this.items = response.response;
           } catch (error) {
             console.error("Erro ao carregar itens:", error);
@@ -211,7 +217,7 @@
         async getIdPedido() {
           this.loading = true;
           try {
-            const response = await this.$api.get(`/pedido`);            
+            const response = await this.$api.get(`/pedido`);
             this.pedido = response.response;
             this.pedido = this.pedido.map((item) => {
               return {
@@ -226,39 +232,69 @@
           }
         },
 
+        async getIdConsumidor() {
+          this.loading = true;
+          try {
+            const response = await this.$api.get(`/consumidor`);            
+            this.consumidor = response.response;
+            this.consumidor = this.consumidor.map((item) => {
+              return {
+                label: item.id,
+                id: item.id,
+              };
+            });            
+          } catch (error) {
+            console.error("Erro ao carregar itens:", error);
+          } finally {
+            console.log("pedido carregados");
+          }
+        },
+
         editItem(item) {
-          this.comanda = {
+          this.historicoCompras = {
             ...item,
           };
           this.ativo2 = true;
         },
 
         async create() {
-          const response = await this.$api.post("/comanda/create", this.comanda);
-          console.log("Criando item");
-          await this.getItems();
-          this.resetUsuario();
+          if (!this.historicoCompras.idConsumidor || !this.historicoCompras.idPedido || !this.historicoCompras.data) {
+            alert("Por favor, preencha todos os campos antes de criar.");
+            return;
+          }
+
+          try {
+            const response = await this.$api.post("/historico-compras/create", this.historicoCompras);
+            console.log("Item criado com sucesso", response);
+            await this.getItems();
+            this.resetUsuario();
+          } catch (error) {
+            console.error("Erro ao criar item:", error);
+          }
         },
 
         async edit() {
-          const response = await this.$api.patch(`/comanda/update/${this.comanda.id}`, this.comanda);
-          console.log("Editando item");
-          await this.getItems();
-          this.resetUsuario();
+          try {
+            const response = await this.$api.patch(`/historico-compras/update/${this.historicoCompras.id}`, this.historicoCompras);
+            console.log("Editando item");
+            await this.getItems();
+            this.resetUsuario();
+          } catch (error) {
+            console.error("Erro ao editar item:", error);
+          }
         },
 
         async deleteItem(item) {  
-          if (confirm(`Deseja deletar o registro com cpf ${item.id}`)) {
+          if (confirm(`Deseja deletar o registro com ids ${item.id}`)) {
             this.loading = true;
             try {
-              const response = await this.$api.delete(`/comanda/delete/${item.id}`);
+              const response = await this.$api.delete(`/historico-compras/delete/${item.id}`);
+              console.log("Deletando item");
+              await this.getItems();
+              this.loading = false;
             } catch (error) {
               console.error("Erro ao excluir item:", error);
             }
-            console.log("Deletando item");
-            
-            await this.getItems();
-            this.loading = false;
           }
         }
       },

@@ -3,7 +3,7 @@
       <v-app>
         <v-container>
           <TabelaComponent 
-            titulo="Funcionarios" 
+            titulo="Produtos" 
             :items="items" 
             :headers="headers" 
             @editou="editItem" 
@@ -14,20 +14,51 @@
           <v-dialog 
             v-model="ativo" 
             max-width="500"
+            style="display: flex; justify-content: center; align-items: center; margin: 0 auto;"
           >
-            <v-card height="350" width="500" theme="dark">
+            <v-card height="625" width="650" theme="dark">
               <v-card-title>
                 Criar
               </v-card-title>
               <v-card-text>
                 <v-row>
-                  
                   <v-col>
                     <v-text-field 
-                      v-model="funcionario.funcao"
-                      placeholder="Função" 
-                      item-title="funcao" 
-                      item-value="funcao"
+                      v-model="produto.nome"
+                      placeholder="Nome do produto" 
+                      item-title="nome" 
+                      item-value="nome"
+                    />
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col>
+                    <v-textarea 
+                      v-model="produto.descricaoProduto"
+                      placeholder="Descricao do produto" 
+                      item-title="descricaoProduto" 
+                      item-value="descricaoProduto"
+                    />
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col>
+                    <v-text-field 
+                      v-model="produto.quantidade"
+                      placeholder="Quantidade" 
+                      item-title="quantidade" 
+                      item-value="quantidade"
+                    />
+                  </v-col>
+
+                  <v-col>
+                    <v-text-field 
+                      v-model="produto.valor"
+                      placeholder="Valor R$" 
+                      item-title="valor" 
+                      item-value="valor"
                     />
                   </v-col>
                 </v-row>
@@ -35,11 +66,11 @@
                 <v-row>
                   <v-col>
                     <v-autocomplete 
-                      v-model="funcionario.cpfUsuario"
-                      :items="cpfs" 
-                      placeholder="cpf"
-                      item-title="cpf" 
-                      item-value="cpfUsuario"
+                      v-model="produto.idPedido"
+                      :items="pedido" 
+                      placeholder="pedido"
+                      item-title="label" 
+                      item-value="idPedido"
                     />
                   </v-col>
                 </v-row>
@@ -58,8 +89,8 @@
             max-width="500"
           >
             <v-card 
-              height="550" 
-              width="500" 
+              height="625" 
+              width="650" 
               theme="dark"
             >
               <v-card-title>
@@ -67,13 +98,43 @@
               </v-card-title>
               <v-card-text>
                 <v-row>
-                  
                   <v-col>
                     <v-text-field 
-                      v-model="funcionario.funcao"
-                      placeholder="Função" 
-                      item-title="funcao" 
-                      item-value="funcao"
+                      v-model="produto.nome"
+                      placeholder="Nome do produto" 
+                      item-title="nome" 
+                      item-value="nome"
+                    />
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col>
+                    <v-textarea 
+                      v-model="produto.descricaoProduto"
+                      placeholder="Descricao do produto" 
+                      item-title="descricaoProduto" 
+                      item-value="descricaoProduto"
+                    />
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col>
+                    <v-text-field 
+                      v-model="produto.quantidade"
+                      placeholder="Quantidade" 
+                      item-title="quantidade" 
+                      item-value="quantidade"
+                    />
+                  </v-col>
+
+                  <v-col>
+                    <v-text-field 
+                      v-model="produto.valor"
+                      placeholder="Valor R$" 
+                      item-title="valor" 
+                      item-value="valor"
                     />
                   </v-col>
                 </v-row>
@@ -81,11 +142,11 @@
                 <v-row>
                   <v-col>
                     <v-autocomplete 
-                      v-model="funcionario.cpfUsuario"
-                      :items="cpfs" 
-                      placeholder="Presença"
-                      item-title="cpf" 
-                      item-value="cpf"
+                      v-model="produto.idPedido"
+                      :items="pedido" 
+                      placeholder="pedido"
+                      item-title="label" 
+                      item-value="idPedido"
                     />
                   </v-col>
                 </v-row>
@@ -114,10 +175,13 @@
           textoUsuario: null,
           tab: null,
           search: "",
-          funcionario: {
-            id: null,
-            funcao: null,
-            cpfUsuario: null,
+          produto: {
+            id: null, 
+            nome: null, 
+            descricaoProduto: null, 
+            quantidade: null, 
+            valor: null, 
+            idPedido: null,
           },
           headers: [
             {
@@ -125,8 +189,12 @@
               key: "id",
             },
             {
-              title: "Função",
-              key: "funcao",
+              title: "Nome",
+              key: "nome",
+            },
+            {
+              title: "Quantidade Requisitada",
+              key: "quantidade",
             },
             {
               title: "",
@@ -159,15 +227,18 @@
 
       async created() {
         await this.getItems();
-        await this.getCpf();
+        await this.getIdPedido();
       },
 
       methods: {
         resetUsuario() {
-          this.funcionario = {
-            id: null,
-            funcao: null,
-            cpfUsuario: null,
+          this.produto = {
+            id: null, 
+            nome: null, 
+            descricaoProduto: null, 
+            quantidade: null, 
+            valor: null, 
+            idPedido: null,
           };
           this.ativo = false;
           this.ativo2 = false;
@@ -176,7 +247,7 @@
         async getItems() {
           this.loading = true;
           try {
-            const response = await this.$api.get("/funcionario");
+            const response = await this.$api.get("/produto");
             this.items = response.response;
           } catch (error) {
             console.error("Erro ao carregar itens:", error);
@@ -186,50 +257,50 @@
           }
         },
 
-        async getCpf() {
+        async getIdPedido() {
           this.loading = true;
           try {
-            const response = await this.$api.get(`/usuario`);            
-            this.cpfs = response.response;
-            this.cpfs = this.cpfs.map((item) => {
+            const response = await this.$api.get(`/pedido`);            
+            this.pedido = response.response;
+            this.pedido = this.pedido.map((item) => {
               return {
-                label: item.cpf,
-                cpf: item.cpf,
+                label: item.id,
+                id: item.id,
               };
             });            
           } catch (error) {
             console.error("Erro ao carregar itens:", error);
           } finally {
-            console.log("cpfs carregados");
+            console.log("pedido carregados");
           }
         },
 
         editItem(item) {
-          this.funcionario = {
+          this.produto = {
             ...item,
           };
           this.ativo2 = true;
         },
 
         async create() {
-          const response = await this.$api.post("/funcionario/create", this.funcionario);
+          const response = await this.$api.post("/produto/create", this.produto);
           console.log("Criando item");
           await this.getItems();
           this.resetUsuario();
         },
 
         async edit() {
-          const response = await this.$api.patch(`/funcionario/update/${this.funcionario.id}`, this.funcionario);
+          const response = await this.$api.patch(`/produto/update/${this.produto.id}`, this.produto);
           console.log("Editando item");
           await this.getItems();
           this.resetUsuario();
         },
 
         async deleteItem(item) {  
-          if (confirm(`Deseja deletar o registro com cpf ${item.id}`)) {
+          if (confirm(`Deseja deletar o registro com Id ${item.id}`)) { 
             this.loading = true;
             try {
-              const response = await this.$api.delete(`/funcionario/delete/${item.id}`);
+              const response = await this.$api.delete(`/produto/delete/${item.id}`);
             } catch (error) {
               console.error("Erro ao excluir item:", error);
             }
@@ -238,7 +309,7 @@
             await this.getItems();
             this.loading = false;
           }
-        }
+        } 
       },
     };
   </script>

@@ -15,41 +15,40 @@
             v-model="ativo" 
             max-width="500"
           >
-            <v-card height="450" width="500" theme="dark">
+            <v-card height="350" width="500" theme="dark">
               <v-card-title>
                 Criar
               </v-card-title>
               <v-card-text>
                 <v-row>
                   <v-col>
-                    <v-text-field 
-                      v-model="comanda.data"
-                      placeholder="Data" 
-                      item-title="data" 
-                      item-value="data"
+                    <v-autocomplete 
+                      v-model="pedidoProduto.idProduto"
+                      :items="produto" 
+                      placeholder="Id do Serviço"
+                      item-title="label" 
+                      item-value="idProduto"
                     />
                   </v-col>
-                </v-row>
 
-                <v-row>
-                  <v-col>
-                    <v-text-field 
-                      v-model="comanda.hora"
-                      placeholder="Hora de Cadastro" 
-                      item-title="hora" 
-                      item-value="hora"
-                    />
-                  </v-col>
-                </v-row>
-
-                <v-row>
                   <v-col>
                     <v-autocomplete 
-                      v-model="comanda.idPedido"
+                      v-model="pedidoProduto.idPedido"
                       :items="pedido" 
                       placeholder="Id do Pedido"
                       item-title="label" 
-                      item-value="id"
+                      item-value="idPedido"
+                    />
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col>
+                    <v-text-field 
+                      v-model="pedidoProduto.quantidade"
+                      placeholder="Quantidade"
+                      item-title="quantidade" 
+                      item-value="quantidade"
                     />
                   </v-col>
                 </v-row>
@@ -68,7 +67,7 @@
             max-width="500"
           >
             <v-card 
-              height="550" 
+              height="350" 
               width="500" 
               theme="dark"
             >
@@ -78,34 +77,33 @@
               <v-card-text>
                 <v-row>
                   <v-col>
-                    <v-text-field 
-                      v-model="comanda.data"
-                      placeholder="Nome" 
-                      item-title="nome" 
-                      item-value="nome"
+                    <v-autocomplete 
+                      v-model="pedidoProduto.idProduto"
+                      :items="produto" 
+                      placeholder="Id do Serviço"
+                      item-title="label" 
+                      item-value="idProduto"
                     />
                   </v-col>
-                </v-row>
 
-                <v-row>
-                  <v-col>
-                    <v-text-field 
-                      v-model="comanda.hora"
-                      placeholder="Nome" 
-                      item-title="nome" 
-                      item-value="nome"
-                    />
-                  </v-col>
-                </v-row>
-
-                <v-row>
                   <v-col>
                     <v-autocomplete 
-                      v-model="comanda.idPedido"
+                      v-model="pedidoProduto.idPedido"
                       :items="pedido" 
-                      placeholder="Presença"
+                      placeholder="Id do Pedido"
                       item-title="label" 
                       item-value="idPedido"
+                    />
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col>
+                    <v-text-field 
+                      v-model="pedidoProduto.quantidade"
+                      placeholder="Quantidade"
+                      item-title="quantidade" 
+                      item-value="quantidade"
                     />
                   </v-col>
                 </v-row>
@@ -134,20 +132,23 @@
           textoUsuario: null,
           tab: null,
           search: "",
-          comanda: {
-            id: null,
-            data: null,
-            hora: null,
+          pedidoProduto: {
+            idProduto: null,
             idPedido: null,
+            quantidade: null,
           },
           headers: [
             {
-              title: "Id",
-              key: "id",
+              title: "Id do Produto",
+              key: "idProduto",
             },
             {
-              title: "Hora de Pedido",
-              key: "hora",
+              title: "Id do Pedido",
+              key: "idPedido",
+            },
+            {
+              title: "Quantidade",
+              key: "quantidade",
             },
             {
               title: "",
@@ -157,6 +158,7 @@
           ],
           items: [],
           pedido: [],
+          produto: [],
         };
       },
 
@@ -181,15 +183,15 @@
       async created() {
         await this.getItems();
         await this.getIdPedido();
+        await this.getIdProduto();
       },
 
       methods: {
         resetUsuario() {
-          this.comanda = {
-            id: null,
-            data: null,
-            hora: null,
+          this.pedidoProduto = {
+            idProduto: null,
             idPedido: null,
+            quantidade: null,
           };
           this.ativo = false;
           this.ativo2 = false;
@@ -198,7 +200,7 @@
         async getItems() {
           this.loading = true;
           try {
-            const response = await this.$api.get("/comanda");
+            const response = await this.$api.get("/pedido-produto");
             this.items = response.response;
           } catch (error) {
             console.error("Erro ao carregar itens:", error);
@@ -226,39 +228,65 @@
           }
         },
 
+        async getIdProduto() {
+          this.loading = true;
+          try {
+            const response = await this.$api.get(`/produto`);            
+            this.produto = response.response;
+            this.produto = this.produto.map((item) => {
+              return {
+                label: item.id,
+                id: item.id,
+              };
+            });            
+          } catch (error) {
+            console.error("Erro ao carregar itens:", error);
+          } finally {
+            console.log("pedido carregados");
+          }
+        },
+
         editItem(item) {
-          this.comanda = {
+          this.pedidoProduto = {
             ...item,
           };
           this.ativo2 = true;
         },
 
         async create() {
-          const response = await this.$api.post("/comanda/create", this.comanda);
+          if (!this.pedidoProduto.idProduto || !this.pedidoProduto.idPedido || !this.pedidoProduto.quantidade) {
+            alert("Por favor, preencha todos os campos antes de criar.");
+            return;
+          }
+          
+          const response = await this.$api.post("/pedido-produto/create", this.pedidoProduto);
           console.log("Criando item");
           await this.getItems();
           this.resetUsuario();
         },
 
         async edit() {
-          const response = await this.$api.patch(`/comanda/update/${this.comanda.id}`, this.comanda);
-          console.log("Editando item");
-          await this.getItems();
-          this.resetUsuario();
+          try {
+            const response = await this.$api.patch(`/pedido-produto/update/${this.pedidoProduto.idProduto}/${this.pedidoProduto.idPedido}`, this.pedidoProduto);
+            console.log("Editando item");
+            await this.getItems();
+            this.resetUsuario();
+          } catch (error) {
+            console.error("Erro ao editar item:", error);
+          }
         },
 
         async deleteItem(item) {  
-          if (confirm(`Deseja deletar o registro com cpf ${item.id}`)) {
+          if (confirm(`Deseja deletar o registro com ids ${item.idProduto} e  ${item.idPedido}`)) {
             this.loading = true;
             try {
-              const response = await this.$api.delete(`/comanda/delete/${item.id}`);
+              const response = await this.$api.delete(`/pedido-produto/delete/${item.idProduto}/${item.idPedido}`);
+              console.log("Deletando item");
+              await this.getItems();
+              this.loading = false;
             } catch (error) {
               console.error("Erro ao excluir item:", error);
             }
-            console.log("Deletando item");
-            
-            await this.getItems();
-            this.loading = false;
           }
         }
       },
