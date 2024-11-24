@@ -90,7 +90,7 @@
                 <v-row>
                   <v-col>
                     <v-text-field 
-                      v-model="comanda.hora"
+                      v-model="comanda.hora"  
                       placeholder="Nome" 
                       item-title="nome" 
                       item-value="nome"

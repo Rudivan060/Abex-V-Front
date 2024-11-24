@@ -3,7 +3,7 @@
       <v-app>
         <v-container>
           <TabelaComponent 
-            titulo="Comandas" 
+            titulo="Pedido Produto" 
             :items="items" 
             :headers="headers" 
             @editou="editItem" 

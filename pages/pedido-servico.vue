@@ -3,7 +3,7 @@
       <v-app>
         <v-container>
           <TabelaComponent 
-            titulo="Comandas" 
+            titulo="Pedido Serviço" 
             :items="items" 
             :headers="headers" 
             @editou="editItem" 
@@ -122,10 +122,6 @@
             {
               title: "Id do Pedido",
               key: "idPedido",
-            },
-            {
-              title: "Quantidade",
-              key: "quantidade",
             },
             {
               title: "",
