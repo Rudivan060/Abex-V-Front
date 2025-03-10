@@ -3,7 +3,7 @@
       <v-app>
         <v-container>
           <TabelaComponent 
-            titulo="Produtos" 
+            titulo="Comandas" 
             :items="items" 
             :headers="headers" 
             @editou="editItem" 
@@ -14,9 +14,8 @@
           <v-dialog 
             v-model="ativo" 
             max-width="500"
-            style="display: flex; justify-content: center; align-items: center; margin: 0 auto;"
           >
-            <v-card height="625" width="650" theme="dark">
+            <v-card height="450" width="500" theme="dark">
               <v-card-title>
                 Criar
               </v-card-title>
@@ -24,21 +23,10 @@
                 <v-row>
                   <v-col>
                     <v-text-field 
-                      v-model="produto.nome"
-                      placeholder="Nome do produto" 
-                      item-title="nome" 
-                      item-value="nome"
-                    />
-                  </v-col>
-                </v-row>
-
-                <v-row>
-                  <v-col>
-                    <v-textarea 
-                      v-model="produto.descricaoProduto"
-                      placeholder="Descricao do produto" 
-                      item-title="descricaoProduto" 
-                      item-value="descricaoProduto"
+                      v-model="comanda.data"
+                      placeholder="Data" 
+                      item-title="data" 
+                      item-value="data"
                     />
                   </v-col>
                 </v-row>
@@ -46,19 +34,10 @@
                 <v-row>
                   <v-col>
                     <v-text-field 
-                      v-model="produto.quantidade"
-                      placeholder="Quantidade" 
-                      item-title="quantidade" 
-                      item-value="quantidade"
-                    />
-                  </v-col>
-
-                  <v-col>
-                    <v-text-field 
-                      v-model="produto.valor"
-                      placeholder="Valor R$" 
-                      item-title="valor" 
-                      item-value="valor"
+                      v-model="comanda.hora"
+                      placeholder="Hora de Cadastro" 
+                      item-title="hora" 
+                      item-value="hora"
                     />
                   </v-col>
                 </v-row>
@@ -66,11 +45,11 @@
                 <v-row>
                   <v-col>
                     <v-autocomplete 
-                      v-model="produto.idPedido"
+                      v-model="comanda.idPedido"
                       :items="pedido" 
-                      placeholder="pedido"
+                      placeholder="Id do Pedido"
                       item-title="label" 
-                      item-value="idPedido"
+                      item-value="id"
                     />
                   </v-col>
                 </v-row>
@@ -89,8 +68,8 @@
             max-width="500"
           >
             <v-card 
-              height="625" 
-              width="650" 
+              height="550" 
+              width="500" 
               theme="dark"
             >
               <v-card-title>
@@ -100,8 +79,8 @@
                 <v-row>
                   <v-col>
                     <v-text-field 
-                      v-model="produto.nome"
-                      placeholder="Nome do produto" 
+                      v-model="comanda.data"
+                      placeholder="Nome" 
                       item-title="nome" 
                       item-value="nome"
                     />
@@ -110,31 +89,11 @@
 
                 <v-row>
                   <v-col>
-                    <v-textarea 
-                      v-model="produto.descricaoProduto"
-                      placeholder="Descricao do produto" 
-                      item-title="descricaoProduto" 
-                      item-value="descricaoProduto"
-                    />
-                  </v-col>
-                </v-row>
-
-                <v-row>
-                  <v-col>
                     <v-text-field 
-                      v-model="produto.quantidade"
-                      placeholder="Quantidade" 
-                      item-title="quantidade" 
-                      item-value="quantidade"
-                    />
-                  </v-col>
-
-                  <v-col>
-                    <v-text-field 
-                      v-model="produto.valor"
-                      placeholder="Valor R$" 
-                      item-title="valor" 
-                      item-value="valor"
+                      v-model="comanda.hora"  
+                      placeholder="Nome" 
+                      item-title="nome" 
+                      item-value="nome"
                     />
                   </v-col>
                 </v-row>
@@ -142,9 +101,9 @@
                 <v-row>
                   <v-col>
                     <v-autocomplete 
-                      v-model="produto.idPedido"
+                      v-model="comanda.idPedido"
                       :items="pedido" 
-                      placeholder="pedido"
+                      placeholder="Presença"
                       item-title="label" 
                       item-value="idPedido"
                     />
@@ -175,12 +134,10 @@
           textoUsuario: null,
           tab: null,
           search: "",
-          produto: {
-            id: null, 
-            nome: null, 
-            descricaoProduto: null, 
-            quantidade: null, 
-            valor: null, 
+          comanda: {
+            id: null,
+            data: null,
+            hora: null,
             idPedido: null,
           },
           headers: [
@@ -189,12 +146,8 @@
               key: "id",
             },
             {
-              title: "Nome",
-              key: "nome",
-            },
-            {
-              title: "Quantidade Requisitada",
-              key: "quantidade",
+              title: "Hora de Pedido",
+              key: "hora",
             },
             {
               title: "",
@@ -203,7 +156,7 @@
             },
           ],
           items: [],
-          cpfs: [],
+          pedido: [],
         };
       },
 
@@ -232,12 +185,10 @@
 
       methods: {
         resetUsuario() {
-          this.produto = {
-            id: null, 
-            nome: null, 
-            descricaoProduto: null, 
-            quantidade: null, 
-            valor: null, 
+          this.comanda = {
+            id: null,
+            data: null,
+            hora: null,
             idPedido: null,
           };
           this.ativo = false;
@@ -247,7 +198,7 @@
         async getItems() {
           this.loading = true;
           try {
-            const response = await this.$api.get("/produto");
+            const response = await this.$api.get("/comanda");
             this.items = response.response;
           } catch (error) {
             console.error("Erro ao carregar itens:", error);
@@ -276,31 +227,31 @@
         },
 
         editItem(item) {
-          this.produto = {
+          this.comanda = {
             ...item,
           };
           this.ativo2 = true;
         },
 
         async create() {
-          const response = await this.$api.post("/produto/create", this.produto);
+          const response = await this.$api.post("/comanda/create", this.comanda);
           console.log("Criando item");
           await this.getItems();
           this.resetUsuario();
         },
 
         async edit() {
-          const response = await this.$api.patch(`/produto/update/${this.produto.id}`, this.produto);
+          const response = await this.$api.patch(`/comanda/update/${this.comanda.id}`, this.comanda);
           console.log("Editando item");
           await this.getItems();
           this.resetUsuario();
         },
 
         async deleteItem(item) {  
-          if (confirm(`Deseja deletar o registro com Id ${item.id}`)) { 
+          if (confirm(`Deseja deletar o registro com cpf ${item.id}`)) {
             this.loading = true;
             try {
-              const response = await this.$api.delete(`/produto/delete/${item.id}`);
+              const response = await this.$api.delete(`/comanda/delete/${item.id}`);
             } catch (error) {
               console.error("Erro ao excluir item:", error);
             }
@@ -309,7 +260,7 @@
             await this.getItems();
             this.loading = false;
           }
-        } 
+        }
       },
     };
   </script>

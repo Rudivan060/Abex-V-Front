@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     /* vuetify options */
     vuetifyOptions: {
       theme: {
-        defaultTheme: 'dark',
+        defaultTheme: 'light',
         themes: {
           temaCustomizado,
         },
