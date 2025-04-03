@@ -1,9 +1,9 @@
-  <template>
+<template>
     <div>
       <v-app>
         <v-container>
           <TabelaComponent 
-            titulo="Consumidores" 
+            titulo="Token" 
             :items="items" 
             :headers="headers" 
             @editou="editItem" 
@@ -15,27 +15,15 @@
             v-model="ativo" 
             max-width="500"
           >
-            <v-card height="350" width="500" theme="dark">
+            <v-card height="225" width="500" theme="dark">
               <v-card-title>
                 Criar
               </v-card-title>
               <v-card-text>
                 <v-row>
-                  
-                  <v-col>
-                    <v-text-field 
-                      v-model="consumidor.dataCadastro"
-                      placeholder="Data de Cadastro" 
-                      item-title="dataCadastro" 
-                      item-value="dataCadastro"
-                    />
-                  </v-col>
-                </v-row>
-
-                <v-row>
                   <v-col>
                     <v-autocomplete 
-                      v-model="consumidor.cpfUsuario"
+                      v-model="pedido.cpfUsuario"
                       :items="cpfs" 
                       placeholder="cpf"
                       item-title="cpf" 
@@ -70,7 +58,7 @@
                   
                   <v-col>
                     <v-text-field 
-                      v-model="consumidor.dataCadastro"
+                      v-model="pedido.dataCadastro"
                       placeholder="Nome" 
                       item-title="nome" 
                       item-value="nome"
@@ -81,7 +69,7 @@
                 <v-row>
                   <v-col>
                     <v-autocomplete 
-                      v-model="consumidor.cpfUsuario"
+                      v-model="pedido.cpfUsuario"
                       :items="cpfs" 
                       placeholder="Presença"
                       item-title="cpf" 
@@ -114,10 +102,11 @@
           textoUsuario: null,
           tab: null,
           search: "",
-          consumidor: {
+          pedido: {
             id: null,
-            dataCadastro: null,
-            cpfUsuario: null,
+            quantidade: null,
+            idToken: null,
+            idProduto: null,  
           },
           headers: [
             {
@@ -125,8 +114,16 @@
               key: "id",
             },
             {
-              title: "Data de Cadastro",
-              key: "dataCadastro",
+              title: "Quantidade",
+              key: "quantidade",
+            },
+            {
+              title: "Produto",
+              key: "idProduto",
+            },
+            {
+              title: "Token",
+              key: "idToken",
             },
             {
               title: "",
@@ -135,7 +132,6 @@
             },
           ],
           items: [],
-          cpfs: [],
         };
       },
 
@@ -164,10 +160,11 @@
 
       methods: {
         resetUsuario() {
-          this.consumidor = {
+          this.pedido = {
             id: null,
-            dataCadastro: null,
-            cpfUsuario: null,
+            quantidade: null,
+            idToken: null,
+            idProduto: null,
           };
           this.ativo = false;
           this.ativo2 = false;
@@ -176,7 +173,7 @@
         async getItems() {
           this.loading = true;
           try {
-            const response = await this.$api.get("/consumidor");
+            const response = await this.$api.get("/pedido");
             this.items = response.response;
           } catch (error) {
             console.error("Erro ao carregar itens:", error);
@@ -186,50 +183,32 @@
           }
         },
 
-        async getCpf() {
-          this.loading = true;
-          try {
-            const response = await this.$api.get(`/usuario`);            
-            this.cpfs = response.response;
-            this.cpfs = this.cpfs.map((item) => {
-              return {
-                label: item.cpf,
-                cpf: item.cpf,
-              };
-            });            
-          } catch (error) {
-            console.error("Erro ao carregar itens:", error);
-          } finally {
-            console.log("cpfs carregados");
-          }
-        },
-
         editItem(item) {
-          this.consumidor = {
+          this.pedido = {
             ...item,
           };
           this.ativo2 = true;
         },
 
         async create() {
-          const response = await this.$api.post("/consumidor/create", this.consumidor);
+          const response = await this.$api.post("/pedido/create", this.pedido);
           console.log("Criando item");
           await this.getItems();
           this.resetUsuario();
         },
 
         async edit() {
-          const response = await this.$api.patch(`/consumidor/update/${this.consumidor.id}`, this.consumidor);
+          const response = await this.$api.patch(`/pedido/update/${this.pedido.id}`, this.pedido);
           console.log("Editando item");
           await this.getItems();
           this.resetUsuario();
         },
 
         async deleteItem(item) {  
-          if (confirm(`Deseja deletar o registro com cpf ${item.id}`)) {
+          if (confirm(`Deseja deletar o registro com CPF ${item.cpfUsuario}`)) { 
             this.loading = true;
             try {
-              const response = await this.$api.delete(`/consumidor/delete/${item.id}`);
+              const response = await this.$api.delete(`/pedido/delete/${item.id}`);
             } catch (error) {
               console.error("Erro ao excluir item:", error);
             }
@@ -238,7 +217,7 @@
             await this.getItems();
             this.loading = false;
           }
-        }
+        } 
       },
     };
   </script>

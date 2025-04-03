@@ -197,7 +197,6 @@
             id: null, 
             nome: null, 
             descricaoProduto: null, 
-            quantidade: null, 
             valor: null,
             imagem: null, 
             idPedido: null,
