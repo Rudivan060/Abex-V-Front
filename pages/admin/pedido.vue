@@ -15,19 +15,38 @@
             v-model="ativo" 
             max-width="500"
           >
-            <v-card height="225" width="500" theme="dark">
+            <v-card height="350" width="500" theme="dark">
               <v-card-title>
                 Criar
               </v-card-title>
               <v-card-text>
                 <v-row>
                   <v-col>
+                    <v-text-field 
+                      v-model="pedido.quantidade"
+                      placeholder="Quantidade de Produtos"
+                      item-title="quantidade" 
+                      item-value="quantidade"
+                    />
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
                     <v-autocomplete 
-                      v-model="pedido.cpfUsuario"
-                      :items="cpfs" 
-                      placeholder="cpf"
-                      item-title="cpf" 
-                      item-value="cpfUsuario"
+                      v-model="pedido.idProduto"
+                      :items="produto" 
+                      placeholder="Produto"
+                      item-title="nome" 
+                      item-value="id"
+                    />
+                  </v-col>
+                  <v-col>
+                    <v-autocomplete 
+                      v-model="pedido.idToken"
+                      :items="token" 
+                      placeholder="Token"
+                      item-title="id" 
+                      item-value="id"
                     />
                   </v-col>
                 </v-row>
@@ -46,7 +65,7 @@
             max-width="500"
           >
             <v-card 
-              height="550" 
+              height="350" 
               width="500" 
               theme="dark"
             >
@@ -55,25 +74,32 @@
               </v-card-title>
               <v-card-text>
                 <v-row>
-                  
                   <v-col>
                     <v-text-field 
-                      v-model="pedido.dataCadastro"
-                      placeholder="Nome" 
-                      item-title="nome" 
-                      item-value="nome"
+                      v-model="pedido.quantidade"
+                      placeholder="Quantidade de Produtos"
+                      item-title="quantidade" 
+                      item-value="quantidade"
                     />
                   </v-col>
                 </v-row>
-
                 <v-row>
                   <v-col>
                     <v-autocomplete 
-                      v-model="pedido.cpfUsuario"
-                      :items="cpfs" 
-                      placeholder="Presença"
-                      item-title="cpf" 
-                      item-value="cpf"
+                      v-model="pedido.idProduto"
+                      :items="produto" 
+                      placeholder="Produto"
+                      item-title="nome" 
+                      item-value="id"
+                    />
+                  </v-col>
+                  <v-col>
+                    <v-autocomplete 
+                      v-model="pedido.idToken"
+                      :items="token" 
+                      placeholder="Token"
+                      item-title="id" 
+                      item-value="id"
                     />
                   </v-col>
                 </v-row>
@@ -110,16 +136,12 @@
           },
           headers: [
             {
-              title: "Id",
-              key: "id",
-            },
-            {
               title: "Quantidade",
               key: "quantidade",
             },
             {
               title: "Produto",
-              key: "idProduto",
+              key: "nomeProduto",
             },
             {
               title: "Token",
@@ -132,6 +154,8 @@
             },
           ],
           items: [],
+          produto: [],
+          token: [],
         };
       },
 
@@ -154,8 +178,9 @@
       },
 
       async created() {
+        await this.getProduto();
         await this.getItems();
-        await this.getCpf();
+        await this.getToken();
       },
 
       methods: {
@@ -174,7 +199,41 @@
           this.loading = true;
           try {
             const response = await this.$api.get("/pedido");
-            this.items = response.response;
+            this.items = response.response.map((item) => {
+              const produto = this.produto.find((p) => p.id === item.idProduto);
+              return {
+                ...item,
+                nomeProduto: produto ? produto.nome : "Desconhecido",
+              };
+            });
+          } catch (error) {
+            console.error("Erro ao carregar itens:", error);
+          } finally {
+            this.loading = false;
+            console.log(this.items);
+            
+            console.log("dados carregados");
+          }
+        },
+
+        async getToken() {
+          this.loading = true;
+          try {
+            const response = await this.$api.get("/token");
+            this.token = response.response;
+          } catch (error) {
+            console.error("Erro ao carregar itens:", error);
+          } finally {
+            this.loading = false;
+            console.log("dados carregados");
+          }
+        },
+
+        async getProduto() {
+          this.loading = true;
+          try {
+            const response = await this.$api.get("/produto");
+            this.produto = response.response;
           } catch (error) {
             console.error("Erro ao carregar itens:", error);
           } finally {

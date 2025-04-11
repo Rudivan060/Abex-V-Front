@@ -15,7 +15,7 @@
             v-model="ativo" 
             max-width="500"
           >
-            <v-card height="450" width="500" theme="dark">
+            <v-card height="225" width="500" theme="dark">
               <v-card-title>
                 Criar
               </v-card-title>
@@ -26,7 +26,7 @@
                       v-model="comanda.idPedido"
                       :items="pedido" 
                       placeholder="Id do Pedido"
-                      item-title="label" 
+                      item-title="id" 
                       item-value="id"
                     />
                   </v-col>
@@ -134,7 +134,7 @@
 
       async created() {
         await this.getItems();
-        await this.getIdPedido();
+        await this.getPedido();
       },
 
       methods: {
@@ -152,6 +152,19 @@
           try {
             const response = await this.$api.get("/comanda");
             this.items = response.response;
+          } catch (error) {
+            console.error("Erro ao carregar itens:", error);
+          } finally {
+            this.loading = false;
+            console.log("dados carregados");
+          }
+        },
+
+        async getPedido() {
+          this.loading = true;
+          try {
+            const response = await this.$api.get("/pedido");
+            this.pedido = response.response;
           } catch (error) {
             console.error("Erro ao carregar itens:", error);
           } finally {
