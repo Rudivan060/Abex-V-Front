@@ -26,77 +26,69 @@
         </v-tabs>
       </v-card>
 
-      <v-row>
-        <v-col 
-          v-for="(item, index) in items"
-          :key="index"
-          cols="12"
-          md="3"
-        >
-          <v-card
-            class="mx-auto mt-10"
-            max-width="325"
-            elevation="15"
-            style="border-radius: 10px;"
+      <div>
+
+        <h1>Refrigerantes</h1>
+
+        <v-row>
+          <v-col 
+            v-for="(item, index) in items"
+            :key="index"
+            cols="12"
+            md="3"
           >
-            <v-img
-              height="225px"
-              :src="item.imagem"
-              cover
-            />
-    
-            <v-card-title>
-              {{ item.nome }}
-            </v-card-title>
-    
-            <v-card-subtitle>
-              {{ item.descricaoProduto }}
-            </v-card-subtitle>
-    
-            <v-card-actions>
-              <v-btn
-                color="orange-lighten-2"
-                text="Requisitar"
-                @click="openDialog(items.id)"
+            <v-card
+              class="mx-auto mt-10"
+              max-width="325"
+              elevation="15"
+              style="border-radius: 10px;"
+            >
+              <v-img
+                height="225px"
+                :src="item.imagem"
+                cover
               />
-    
-              <v-spacer/>
-    
-              <v-card-text>
-                R$ {{ item.valor }}
-              </v-card-text>
-            </v-card-actions>
-          </v-card>
-
-          <v-dialog v-model="ativo" max-width="500">
-            <v-card height="550" width="500" theme="dark">
+      
               <v-card-title>
-                aa {{ produtos.id }}
+                {{ item.nome }}
               </v-card-title>
-              
-              <!-- <v-card-text>
-                <v-row>
-                  <v-col>
-                    
-                    <v-text-field 
-                      v-model="servico.nome"
-                      placeholder="Tipo de Serviço" 
-                      item-title="data" 
-                      item-value="data"
-                    />
-                  </v-col>
-                </v-row>
-              </v-card-text> -->
-
+      
+              <v-card-subtitle>
+                {{ item.descricaoProduto }}
+              </v-card-subtitle>
+      
               <v-card-actions>
-                <v-btn variant="outlined" class="text-none" @click="persist()">
-                  Enviar
-                </v-btn>
+                <v-btn
+                  color="orange-lighten-2"
+                  text="Requisitar"
+                  @click="openDialog(items.id)"
+                />
+      
+                <v-spacer/>
+      
+                <v-card-text> 
+                  R$ {{ item.valor }}
+                </v-card-text>
               </v-card-actions>
             </v-card>
-          </v-dialog>
-        </v-col>
-      </v-row>
+  
+            <v-dialog v-model="ativo" max-width="500">
+              <v-card height="550" width="500" theme="dark">
+                <v-card-title>
+                  aa {{ produtos.id }}
+                </v-card-title>
+                
+                <v-card-actions>
+                  <v-btn variant="outlined" class="text-none" @click="persist()">
+                    Enviar
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-col>
+        </v-row>
+      </div>
+
 
     </div>
   </v-app>
@@ -107,16 +99,19 @@
     data: () => ({
       tab: 2,
       show: false,
-      items: [],
       ativo: false,
       loading: false,
       produtos: {
         id: null,
+        idCategoria:null,
       },
+      items: [],
+      teste: [],
     }),
 
     async created() {
       await this.getItems();
+      await this.getTeste();
     },
 
     methods: {
@@ -129,7 +124,8 @@
           console.error("Erro ao carregar itens:", error);
         } finally {
           this.loading = false;
-          console.log("dados carregados");
+          console.log("dados carregadosssssssss");
+          console.log(this.items);
         }
       },
 
