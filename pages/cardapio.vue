@@ -6,17 +6,17 @@
           <v-tab
           :value="1" class="text-none custom-tab" style="color: darkred; font-weight: bolder; font-size: larger; margin-right: 70px;">Início</v-tab>
         </a>  
-  
+
         <a href="./cardapio">
           <v-tab
           :value="2" class="text-none custom-tab" style="color: darkred; font-weight: bold; font-size: large; margin-right: 70px;">Cardápio</v-tab>
         </a>
-  
+
         <a href="./comanda">
           <v-tab
           :value="3" class="text-none custom-tab" style="color: darkred; font-weight: bold; font-size: large; margin-right: 70px;">Comanda</v-tab>
         </a>
-        
+
         <a href="http://localhost:3000/login">
           <v-icon class="signOut" style="margin-right: 50px;">
             mdi-account
@@ -26,135 +26,149 @@
     </v-card>
 
     <div>
-      <v-card
-        color="red"
-        class="centerText centerCard mt-10"
-      >
-        Refrigerantes
-      </v-card>
-
-      <v-row>
-        <v-col 
-          v-for="(item, index) in soda"
-          :key="index"
-          cols="12"
-          md="3"
-        >
-          <v-card
+      <template v-if="loading">
+        <div class="loading-container">
+          <v-progress-circular
+            indeterminate
+            color="orange"
+            size="100"
+            width="10"
             class="mx-auto mt-10"
-            max-width="325"
-            elevation="15"
-            style="border-radius: 10px;"
-          >
-            <v-img
-              height="225px"
-              :src="item.imagem"
-              cover
-            />
-    
-            <v-card-title>
-              {{ item.nome }}
-            </v-card-title>
-    
-            <v-card-subtitle>
-              {{ item.descricaoProduto }}
-            </v-card-subtitle>
-    
-            <v-card-actions>
-              <v-btn
-                color="orange-lighten-2"
-                text="Requisitar"
-                @click="openDialog(items.id)"
-              />
-    
-              <v-spacer/>
-    
-              <v-card-text> 
-                R$ {{ item.valor }}
-              </v-card-text>
-            </v-card-actions>
-          </v-card>
+          />
+        </div>
+      </template>
 
-          <v-dialog v-model="ativo" max-width="500">
-            <v-card height="550" width="500" theme="dark">
+      <template v-else>
+        <v-card
+          color="red"
+          class="centerText centerCard mt-10"
+        >
+          Refrigerantes
+        </v-card>
+  
+        <v-row>
+          <v-col 
+            v-for="(item, index) in soda"
+            :key="index"
+            cols="12"
+            md="3"
+          >
+            <v-card
+              class="mx-auto mt-10"
+              max-width="325"
+              elevation="15"
+              style="border-radius: 10px;"
+            >
+              <v-img
+                height="225px"
+                :src="item.imagem"
+                cover
+              />
+      
               <v-card-title>
-                aa {{ produtos.id }}
+                {{ item.nome }}
               </v-card-title>
-              
+      
+              <v-card-subtitle>
+                {{ item.descricaoProduto }}
+              </v-card-subtitle>
+      
               <v-card-actions>
-                <v-btn variant="outlined" class="text-none" @click="persist()">
-                  Enviar
-                </v-btn>
+                <v-btn
+                  color="orange-lighten-2"
+                  text="Requisitar"
+                  @click="openDialog(items.id)"
+                />
+      
+                <v-spacer/>
+      
+                <v-card-text> 
+                  R$ {{ item.valor }}
+                </v-card-text>
               </v-card-actions>
             </v-card>
-          </v-dialog>
-        </v-col>
-      </v-row>
-
-      <v-card
-        color="red"
-        class="centerText centerCard mt-10"
-      >
-        Hambúrguers
-      </v-card>
-
-      <v-row>
-        <v-col 
-          v-for="(item, index) in items"
-          :key="index"
-          cols="12"
-          md="3"
+  
+            <v-dialog v-model="ativo" max-width="500">
+              <v-card height="550" width="500" theme="dark">
+                <v-card-title>
+                  aa {{ produtos.id }}
+                </v-card-title>
+                
+                <v-card-actions>
+                  <v-btn variant="outlined" class="text-none" @click="persist()">
+                    Enviar
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-col>
+        </v-row>
+  
+        <v-card
+          color="red"
+          class="centerText centerCard mt-10"
         >
-          <v-card
-            class="mx-auto mt-10"
-            max-width="325"
-            elevation="15"
-            style="border-radius: 10px;"
+          Hambúrguers
+        </v-card>
+  
+        <v-row>
+          <v-col 
+            v-for="(item, index) in items"
+            :key="index"
+            cols="12"
+            md="3"
           >
-            <v-img
-              height="225px"
-              :src="item.imagem"
-              cover
-            />
-    
-            <v-card-title>
-              {{ item.nome }}
-            </v-card-title>
-    
-            <v-card-subtitle>
-              {{ item.descricaoProduto }}
-            </v-card-subtitle>
-    
-            <v-card-actions>
-              <v-btn
-                color="orange-lighten-2"
-                text="Requisitar"
-                @click="openDialog(items.id)"
+            <v-card
+              class="mx-auto mt-10"
+              max-width="325"
+              elevation="15"
+              style="border-radius: 10px;"
+            >
+              <v-img
+                height="225px"
+                :src="item.imagem"
+                cover
               />
-    
-              <v-spacer/>
-    
-              <v-card-text> 
-                R$ {{ item.valor }}
-              </v-card-text>
-            </v-card-actions>
-          </v-card>
-
-          <v-dialog v-model="ativo" max-width="500">
-            <v-card height="550" width="500" theme="dark">
+      
               <v-card-title>
-                aa {{ produtos.id }}
+                {{ item.nome }}
               </v-card-title>
-              
+      
+              <v-card-subtitle>
+                {{ item.descricaoProduto }}
+              </v-card-subtitle>
+      
               <v-card-actions>
-                <v-btn variant="outlined" class="text-none" @click="persist()">
-                  Enviar
-                </v-btn>
+                <v-btn
+                  color="orange-lighten-2"
+                  text="Requisitar"
+                  @click="openDialog(items.id)"
+                />
+      
+                <v-spacer/>
+      
+                <v-card-text> 
+                  R$ {{ item.valor }}
+                </v-card-text>
               </v-card-actions>
             </v-card>
-          </v-dialog>
-        </v-col>
-      </v-row>
+  
+            <v-dialog v-model="ativo" max-width="500">
+              <v-card height="550" width="500" theme="dark">
+                <v-card-title>
+                  aa {{ produtos.id }}
+                </v-card-title>
+                
+                <v-card-actions>
+                  <v-btn variant="outlined" class="text-none" @click="persist()">
+                    Enviar
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-col>
+        </v-row>
+      </template>
     </div>
   </div>
 </template>
@@ -165,18 +179,24 @@
       tab: 2,
       show: false,
       ativo: false,
-      loading: false,
+      loading: true,
       produtos: {
         id: null,
         idCategoria:null,
       },
       items: [],
       soda: [],
+      token: [],
     }),
 
     async created() {
-      await this.getItems();
-      await this.getPerCategory();
+      try {
+        await this.getItems();
+        await this.getPerCategory();
+        await this.getToken();
+      } finally {
+        this.loading = false;
+      }
     },
 
     methods: {
@@ -206,6 +226,31 @@
         }
       },
 
+      async getToken () {
+        this.loading = true;
+        try {
+          const response = await this.$api.get("/token");
+          this.token = response.response;
+        } catch (error) {
+          console.error("Erro ao carregar itens:", error);
+        } finally {
+          this.loading = false;
+          console.log("dados carregados");
+        }
+      },
+
+      async createPedido() {
+        this.loading = true;
+        try {
+          const response = await this.$api.post("/pedido/create", this.produtos);
+          console.log("Pedido criado com sucesso:", response);
+        } catch (error) {
+          console.error("Erro ao criar pedido:", error);
+        } finally {
+          this.loading = false;
+        }
+      },
+
       openDialog() {
         this.ativo = true;
       },
@@ -214,6 +259,13 @@
 </script>
 
 <style>
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
   .custom-tabs-height {
     height: 70px !important;
     display: flex;
