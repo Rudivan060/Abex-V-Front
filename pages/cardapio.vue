@@ -1,6 +1,6 @@
 <template>
   <div class="degrade" style="height: 100%;">
-    <v-card style="background-color:  #fb911f;">
+    <v-card style="background-color: #fb911f;">
       <v-tabs v-model="tab" align-tabs="center" color="red" class="custom-tabs-height">
         <a href="./">
           <v-tab
@@ -51,7 +51,7 @@
             v-for="(item, index) in soda"
             :key="index"
             cols="12"
-            md="3"
+            md="4"
           >
             <v-card
               class="mx-auto mt-10"
@@ -77,7 +77,7 @@
                 <v-btn
                   color="orange-lighten-2"
                   text="Requisitar"
-                  @click="openDialog(items.id)"
+                  @click="openDialog(item.id)"
                 />
       
                 <v-spacer/>
@@ -89,10 +89,10 @@
             </v-card>
   
             <v-dialog v-model="ativo" max-width="500">
-              <v-card height="550" width="500" theme="dark">
+              <v-card height="325" width="500" theme="dark">
 
                 <v-card-title>
-                  asadasdasda {{ produtos.id }}
+                  Realizar Pedido
                 </v-card-title>
 
                 <v-card-text>
@@ -110,7 +110,7 @@
                     <v-col>
                       <v-autocomplete 
                         v-model="pedido.idProduto"
-                        :items="produto" 
+                        :items="soda" 
                         placeholder="Produto"
                         item-title="nome" 
                         item-value="id"
@@ -129,7 +129,7 @@
                 </v-card-text>
                 
                 <v-card-actions>
-                  <v-btn variant="outlined" class="text-none" @click="persist()">
+                  <v-btn variant="outlined" class="text-none" @click="createPedido()">
                     Enviar
                   </v-btn>
                 </v-card-actions>
@@ -150,7 +150,7 @@
             v-for="(item, index) in items"
             :key="index"
             cols="12"
-            md="3"
+            md="4"
           >
             <v-card
               class="mx-auto mt-10"
@@ -176,7 +176,7 @@
                 <v-btn
                   color="orange-lighten-2"
                   text="Requisitar"
-                  @click="openDialog2(items.id)"
+                  @click="openDialog2(item.id)"
                 />
       
                 <v-spacer/>
@@ -188,28 +188,48 @@
             </v-card>
   
             <v-dialog v-model="ativo2" max-width="500">
-              <v-card height="550" width="500" theme="dark">
+              <v-card height="325" width="500" theme="dark">
+
                 <v-card-title>
-                 {{ produtos.id }}
+                  Realizar Pedido
                 </v-card-title>
 
-                <!-- <v-card-text>
+                <v-card-text>
                   <v-row>
                     <v-col>
-                      <v-autocomplete
+                      <v-text-field 
+                        v-model="pedido.quantidade"
+                        placeholder="Quantidade de Produtos"
+                        item-title="quantidade" 
+                        item-value="quantidade"
+                      />
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>
+                      <v-autocomplete 
                         v-model="pedido.idProduto"
-                        :items="produto" 
+                        :items="items" 
                         placeholder="Produto"
                         item-title="nome" 
                         item-value="id"
                       />
                     </v-col>
+                    <v-col>
+                      <v-autocomplete 
+                        v-model="pedido.idToken"
+                        :items="token" 
+                        placeholder="Token"
+                        item-title="id" 
+                        item-value="id"
+                      />
+                    </v-col>
                   </v-row>
-                </v-card-text> -->
+                </v-card-text>
                 
                 <v-card-actions>
-                  <v-btn variant="outlined" class="text-none" @click="persist()">
-                    Enviaraaa
+                  <v-btn variant="outlined" class="text-none" @click="createPedido()">
+                    Enviar
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -239,7 +259,6 @@
       items: [],
       soda: [],
       token: [],
-      produto: [],
     }),
 
     async created() {
@@ -280,19 +299,6 @@
         }
       },
 
-      async getProduct () {
-        this.loading = true;
-        try {
-          const response = await this.$api.get(`/produto`);
-          this.produto = response.response;
-        } catch (error) {
-          console.error("Erro ao carregar itens:", error);
-        } finally {
-          this.loading = false;
-          console.log("dados carregados");
-        }
-      },
-
       async getToken () {
         this.loading = true;
         try {
@@ -309,21 +315,25 @@
       async createPedido() {
         this.loading = true;
         try {
-          const response = await this.$api.post("/pedido/create", this.produtos);
+          const response = await this.$api.post("/pedido/create", this.pedido);
           console.log("Pedido criado com sucesso:", response);
         } catch (error) {
           console.error("Erro ao criar pedido:", error);
         } finally {
           this.loading = false;
+          this.ativo = false;
+          this.ativo2 = false;
         }
       },
 
-      openDialog() {
+      openDialog(id) {
+        this.selectedItemId = id;
         this.ativo = true;
       },
-      openDialog2() {
-        this.selectedItemId = id; // Armazena o ID do item selecionado
-  this.ativo2 = true; // Abre o diálogo
+
+      openDialog2(id) {
+        this.selectedItemId = id;
+        this.ativo2 = true;
       },
     },
   }
