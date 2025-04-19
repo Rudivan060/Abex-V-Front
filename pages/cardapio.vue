@@ -90,9 +90,43 @@
   
             <v-dialog v-model="ativo" max-width="500">
               <v-card height="550" width="500" theme="dark">
+
                 <v-card-title>
-                  aa {{ produtos.id }}
+                  asadasdasda {{ produtos.id }}
                 </v-card-title>
+
+                <v-card-text>
+                  <v-row>
+                    <v-col>
+                      <v-text-field 
+                        v-model="pedido.quantidade"
+                        placeholder="Quantidade de Produtos"
+                        item-title="quantidade" 
+                        item-value="quantidade"
+                      />
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>
+                      <v-autocomplete 
+                        v-model="pedido.idProduto"
+                        :items="produto" 
+                        placeholder="Produto"
+                        item-title="nome" 
+                        item-value="id"
+                      />
+                    </v-col>
+                    <v-col>
+                      <v-autocomplete 
+                        v-model="pedido.idToken"
+                        :items="token" 
+                        placeholder="Token"
+                        item-title="id" 
+                        item-value="id"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-card-text>
                 
                 <v-card-actions>
                   <v-btn variant="outlined" class="text-none" @click="persist()">
@@ -142,7 +176,7 @@
                 <v-btn
                   color="orange-lighten-2"
                   text="Requisitar"
-                  @click="openDialog(items.id)"
+                  @click="openDialog2(items.id)"
                 />
       
                 <v-spacer/>
@@ -153,15 +187,29 @@
               </v-card-actions>
             </v-card>
   
-            <v-dialog v-model="ativo" max-width="500">
+            <v-dialog v-model="ativo2" max-width="500">
               <v-card height="550" width="500" theme="dark">
                 <v-card-title>
-                  aa {{ produtos.id }}
+                 {{ produtos.id }}
                 </v-card-title>
+
+                <!-- <v-card-text>
+                  <v-row>
+                    <v-col>
+                      <v-autocomplete
+                        v-model="pedido.idProduto"
+                        :items="produto" 
+                        placeholder="Produto"
+                        item-title="nome" 
+                        item-value="id"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-card-text> -->
                 
                 <v-card-actions>
                   <v-btn variant="outlined" class="text-none" @click="persist()">
-                    Enviar
+                    Enviaraaa
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -174,19 +222,24 @@
 </template>
   
 <script>
+
   export default {
     data: () => ({
       tab: 2,
       show: false,
       ativo: false,
+      ativo2: false,
+      selectedItemId: null,
       loading: true,
-      produtos: {
+      pedido: {
         id: null,
         idCategoria:null,
+        idToken: null,
       },
       items: [],
       soda: [],
       token: [],
+      produto: [],
     }),
 
     async created() {
@@ -194,6 +247,7 @@
         await this.getItems();
         await this.getPerCategory();
         await this.getToken();
+        await this.getProduct();
       } finally {
         this.loading = false;
       }
@@ -218,6 +272,19 @@
         try {
           const response = await this.$api.get("/produto/categoria/1");
           this.soda = response.response;
+        } catch (error) {
+          console.error("Erro ao carregar itens:", error);
+        } finally {
+          this.loading = false;
+          console.log("dados carregados");
+        }
+      },
+
+      async getProduct () {
+        this.loading = true;
+        try {
+          const response = await this.$api.get(`/produto`);
+          this.produto = response.response;
         } catch (error) {
           console.error("Erro ao carregar itens:", error);
         } finally {
@@ -253,6 +320,10 @@
 
       openDialog() {
         this.ativo = true;
+      },
+      openDialog2() {
+        this.selectedItemId = id; // Armazena o ID do item selecionado
+  this.ativo2 = true; // Abre o diálogo
       },
     },
   }
