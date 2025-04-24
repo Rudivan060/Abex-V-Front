@@ -20,7 +20,7 @@
           
           <a href="http://localhost:3000/login">
             <v-icon class="signOut" style="margin-right: 50px;">
-              mdi-login
+              mdi-account
             </v-icon>
           </a>
         </v-tabs>

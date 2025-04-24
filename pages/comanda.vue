@@ -20,7 +20,7 @@
           
           <a href="http://localhost:3000/login">
             <v-icon class="signOut" style="margin-right: 50px;">
-              mdi-login
+              mdi-account
             </v-icon>
           </a>
         </v-tabs>
@@ -29,36 +29,36 @@
   </v-app>
 </template>
     
-  <script>
-    export default {
-      data: () => ({
-        tab: 3,
-      }),
-    }
-  </script>
+<script>
+  export default {
+    data: () => ({
+      tab: 3,
+    }),
+  }
+</script>
   
-  <style>
-    .custom-tabs-height {
-      height: 70px !important;
-      display: flex;
-      align-items: center;
-    }
-  
-    .custom-tab {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-    }
-  
-    .signOut {
-      color: darkred;
-    }
-  
-    .degrade {
-      background: rgb(2, 0, 36);
-      background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(182, 52, 25, 1) 0%, rgba(255, 190, 0, 1) 100%);
-      background-repeat: no-repeat;
-      height: 100vh;
-    }
-  </style>
+<style>
+  .custom-tabs-height {
+    height: 70px !important;
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .signOut {
+    color: darkred;
+  }
+
+  .degrade {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(182, 52, 25, 1) 0%, rgba(255, 190, 0, 1) 100%);
+    background-repeat: no-repeat;
+    height: 100vh;
+  }
+</style>
