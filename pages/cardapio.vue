@@ -242,7 +242,6 @@
 </template>
   
 <script>
-
   export default {
     data: () => ({
       tab: 2,
