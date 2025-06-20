@@ -1,72 +1,87 @@
 <template>
-  <div class="container">
-    <h1>Comanda</h1>
-    <form id="order-form">
-      <div
-        v-for="(item, idx) in outFood"
-        :key="item.name"
-        class="coffee-item"
-      >
-        <label>
-          {{ item.nome }} - ${{ item.valor }}
-        </label>
+  <div class="degrade">
+    <v-card style="background-color: #fb911f;">
+      <v-tabs v-model="tab" align-tabs="center" color="red" class="custom-tabs-height">
+        <a href="./">
+          <v-tab
+          :value="1" class="text-none custom-tab" style="color: darkred; font-weight: bolder; font-size: larger; margin-right: 70px;">Início</v-tab>
+        </a>  
 
-        <div style="text-align: right;">
-          <button
-            type="button"
-            class="quantity-btn"
-            :disabled="!item.checked"
-            @click="decrease(idx)"
-          >-</button>
+        <a href="./cardapio">
+          <v-tab
+          :value="2" class="text-none custom-tab" style="color: darkred; font-weight: bold; font-size: large; margin-right: 70px;">Cardápio</v-tab>
+        </a>
 
-          <input v-model.number="item.quantidade" style="width: 5%; text-align: center;" min="0" :disabled="!item.checked">
+        <a href="./comanda">
+          <v-tab
+          :value="3" class="text-none custom-tab" style="color: darkred; font-weight: bold; font-size: large; margin-right: 70px;">Comanda</v-tab>
+        </a>
+
+        <a href="http://localhost:3000/login">
+          <v-icon class="signOut" style="margin-right: 50px;">
+            mdi-account
+          </v-icon>
+        </a>
+      </v-tabs>
+    </v-card>
+
+    <div class="comanda-outer">
+      <v-card class="comanda-card">
+        <div class="container">
+          <h1>Comanda</h1>
+          <form id="order-form">
+            <div
+              v-for="(item) in outFood"
+              :key="item.name"
+              class="coffee-item"
+            >
+              <label>
+                {{ item.nome }} - ${{ item.valor }}
+              </label>
+              <div style="text-align: right;">
+                <input v-model.number="item.quantidade" style="width: 5%; text-align: center;" min="0" :disabled="!item.checked">
+              </div>
+            </div>
+          </form>
+
+          <div id="order-list">
+            <ul>
+              <li v-for="order in orders" :key="order.date">
+                <p><strong>{{ order.date }}</strong></p>
+                <div v-for="item in order.items" :key="item.name">
+                  <p>{{ item.quantity }} x {{ item.name }} (${{ item.price }})</p>
+                </div>
+                <p><strong>Total: ${{ order.total }}</strong></p>
+              </li>
+            </ul>
+            <p>Total vendido: $<span class="total">{{ totalAmount }}</span></p>
+            <p>
+              <span v-for="(total, name) in productTotals" :key="name">
+                {{ name }}: ${{ total }}<br>
+              </span>
+            </p>
+          </div><br>
           
-          <button
-            type="button"
-            class="quantity-btn"
-            :disabled="!item.checked"
-            @click="increase(idx)"
-          >+</button>
-        </div>
+          <h2>Bah Guri</h2>
 
-      </div>
-    </form>
-
-    <div id="order-list">
-      <ul>
-        <li v-for="order in orders" :key="order.date">
-          <p><strong>{{ order.date }}</strong></p>
-          <div v-for="item in order.items" :key="item.name">
-            <p>{{ item.quantity }} x {{ item.name }} (${{ item.price }})</p>
+          <div class="form-actions">
+            <v-row>
+              <v-col>
+                <v-autocomplete 
+                  v-model="token.id"
+                  :items="token" 
+                  placeholder="Mesa"
+                  item-title="id" 
+                  item-value="id"
+                />
+              </v-col>
+              <v-col>
+                <button type="button" @click="exportCSV">Exportar CSV</button>
+              </v-col>
+            </v-row>
           </div>
-          <p><strong>Total: ${{ order.total }}</strong></p>
-        </li>
-      </ul>
-      <p>Total vendido: $<span class="total">{{ totalAmount }}</span></p>
-      <p>
-        <span v-for="(total, name) in productTotals" :key="name">
-          {{ name }}: ${{ total }}<br>
-        </span>
-      </p>
-    </div><br>
-    
-    <h2>Bah Guri</h2>
-
-    <div class="form-actions">
-      <v-row>
-        <v-col>
-          <v-autocomplete 
-            v-model="token.id"
-            :items="token" 
-            placeholder="Produto"
-            item-title="id" 
-            item-value="id"
-          />
-        </v-col>
-        <v-col>
-          <button type="button" @click="exportCSV">Exportar CSV</button>
-        </v-col>
-      </v-row>
+        </div>
+      </v-card>
     </div>
   </div>
 </template>
@@ -75,6 +90,7 @@
   export default {
     data() {
       return {
+        tab: 3,
         outFood: [],
         produto: [],
         token: [],
@@ -194,13 +210,33 @@
     box-sizing: border-box;
   }
   
+  .comanda-outer {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: flex-start; /* ou center para centralizar verticalmente */
+    justify-content: center;
+    padding-top: 40px;
+    box-sizing: border-box;
+  }
+
+  .comanda-card {
+    width: 40%;
+    min-height: 500px;
+    padding: 32px 24px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
   .container {
-    max-width: 600px;
+    width: 70%;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+    background: transparent;
+    box-shadow: none;
   }
 
   h1,
@@ -217,15 +253,6 @@
     border-bottom: 1px solid #ddd;
   }
   
-  .quantity-btn {
-    background-color: #d7a48f;
-    border: none;
-    padding: 5px 10px;
-    margin: 0 5px;
-    cursor: pointer;
-    color: #fff;
-  }
-
   .quantity-btn:hover {
     background-color: #b2846b;
   }
@@ -281,8 +308,17 @@
     border-radius: 4px;
     margin-bottom: 10px;
   }
+
   .no-display {
     display: none;
+  }
+
+  .degrade {
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(182, 52, 25, 1) 0%, rgba(255, 190, 0, 1) 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    z-index: 0;
   }
 
   .total {

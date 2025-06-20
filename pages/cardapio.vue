@@ -25,7 +25,7 @@
       </v-tabs>
     </v-card>
 
-    <div>
+    <div class="scrollable-content">
       <template v-if="loading">
         <div class="loading-container">
           <v-progress-circular
@@ -339,6 +339,13 @@
 </script>
 
 <style>
+  .scrollable-content {
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 24px;
+  }
+
   .loading-container {
     display: flex;
     justify-content: center;
@@ -384,5 +391,4 @@
     background-size: cover;
     height: 100vh;
   }
-
 </style>
