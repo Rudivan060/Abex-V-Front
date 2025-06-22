@@ -68,7 +68,6 @@
   export default {
     data: () => ({
       tab: 1,
-      loadingGif: true,
     }),
   }
 </script>

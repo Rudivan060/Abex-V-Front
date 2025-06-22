@@ -64,24 +64,10 @@
           </form>
 
           <div id="order-list">
-            <ul>
-              <li v-for="order in orders" :key="order.date">
-                <p><strong>{{ order.date }}</strong></p>
-                <div v-for="item in order.items" :key="item.name">
-                  <p>{{ item.quantity }} x {{ item.name }} (${{ item.price }})</p>
-                </div>
-                <p><strong>Total: ${{ order.total }}</strong></p>
-              </li>
-            </ul>
-            <p>Total vendido: $<span class="total">{{ totalAmount }}</span></p>
-            <p>
-              <span v-for="(total, name) in productTotals" :key="name">
-                {{ name }}: ${{ total }}<br>
-              </span>
-            </p>
+            <p>Total vendido: <span class="total">R${{ totalAmounts }}</span></p>
           </div><br>
           
-          <h2>Bah Guri</h2>
+          <h2>Qual mesa meu guri?</h2>
 
           <div class="form-actions">
             <v-row>
@@ -93,9 +79,6 @@
                   item-title="id" 
                   item-value="id"
                 />
-              </v-col>
-              <v-col>
-                <button type="button" @click="exportCSV">Exportar CSV</button>
               </v-col>
             </v-row>
           </div>
@@ -117,6 +100,14 @@
         totalAmount: 0,
         productTotals: {},
       };
+    },
+
+    computed: {
+      totalAmounts() {
+        return this.outFood.reduce((total, item) => {
+          return total + (item.valor * item.quantidade);
+        }, 0);
+      }
     },
 
     watch: {
@@ -206,7 +197,7 @@
     min-height: 100vh;
     width: 100vw;
     display: flex;
-    align-items: flex-start; /* ou center para centralizar verticalmente */
+    align-items: flex-start;
     justify-content: center;
     padding-top: 40px;
     box-sizing: border-box;
@@ -309,8 +300,9 @@
     background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(182, 52, 25, 1) 0%, rgba(255, 190, 0, 1) 100%);
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
+    min-height: 100vh;
     z-index: 0;
+    overflow-y: auto;
   }
 
   .total {

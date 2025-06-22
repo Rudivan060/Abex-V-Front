@@ -133,6 +133,7 @@
                         placeholder="Produto"
                         item-title="nome" 
                         item-value="id"
+                        disabled="true"
                       />
                     </v-col>
                     <v-col>
@@ -232,6 +233,7 @@
                         placeholder="Produto"
                         item-title="nome" 
                         item-value="id"
+                        disabled="true"
                       />
                     </v-col>
                     <v-col>
@@ -346,11 +348,13 @@
 
       openDialog(id) {
         this.selectedItemId = id;
+        this.pedido.idProduto = id;
         this.ativo = true;
       },
 
       openDialog2(id) {
         this.selectedItemId = id;
+        this.pedido.idProduto = id;
         this.ativo2 = true;
       },
     },
