@@ -2,26 +2,45 @@
   <div class="degrade" style="height: 100%;">
     <v-card style="background-color: #fb911f;">
       <v-tabs v-model="tab" align-tabs="center" color="red" class="custom-tabs-height">
-        <a href="./">
-          <v-tab
-          :value="1" class="text-none custom-tab" style="color: darkred; font-weight: bolder; font-size: larger; margin-right: 70px;">Início</v-tab>
-        </a>  
+          <a href="./">
+            <v-tab
+              :value="1" 
+              class="text-none custom-tab" 
+              style="color: darkred; font-weight: bolder; font-size: larger; margin-right: 70px;"
+            >
+              Início
+            </v-tab>
+          </a>  
 
-        <a href="./cardapio">
-          <v-tab
-          :value="2" class="text-none custom-tab" style="color: darkred; font-weight: bold; font-size: large; margin-right: 70px;">Cardápio</v-tab>
-        </a>
+          <a href="./cardapio">
+            <v-tab
+              :value="2" 
+              class="text-none custom-tab" 
+              style="color: darkred; font-weight: bold; font-size: large; margin-right: 70px;"
+            >
+              Cardápio
+            </v-tab>
+          </a>
 
-        <a href="./comanda">
-          <v-tab
-          :value="3" class="text-none custom-tab" style="color: darkred; font-weight: bold; font-size: large; margin-right: 70px;">Comanda</v-tab>
-        </a>
+          <a href="./comanda">
+            <v-tab
+              :value="3" 
+              class="text-none custom-tab" 
+              style="color: darkred; font-weight: bold; font-size: large; margin-right: 70px;"
+            >
+              Comanda
+            </v-tab>
+          </a>
 
-        <a href="http://localhost:3000/login">
-          <v-icon class="signOut" style="margin-right: 50px;">
-            mdi-account
-          </v-icon>
-        </a>
+          <a href="./ademiro">
+            <v-tab
+              :value="4" 
+              class="text-none custom-tab" 
+              style="color: darkred; font-weight: bold; font-size: large; margin-right: 70px;"
+            >
+              Admin
+            </v-tab>
+          </a>
       </v-tabs>
     </v-card>
 
