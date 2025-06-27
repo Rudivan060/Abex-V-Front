@@ -22,16 +22,6 @@
           </v-tab>
         </a>
 
-        <a href="./comanda">
-          <v-tab
-            :value="3" 
-            class="text-none custom-tab" 
-            style="color: darkred; font-weight: bold; font-size: large; margin-right: 70px;"
-          >
-            Comanda
-          </v-tab>
-        </a>
-
         <a href="./pedido">
           <v-tab
             :value="4" 
